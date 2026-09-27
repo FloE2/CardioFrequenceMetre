@@ -6,156 +6,207 @@
 <title>Cardio de la classe · Polar Verity Sense</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #E9EFF2; --panel: #F7FAFB; --ink: #16242C; --muted: #5B6C76; --line: #C7D3D9;
-    --accent: #2455C8; --heart: #C8324B; --ok: #1B8457; --warn: #A86A09; --err: #BD3434; --idle: #9AA9B1;
-    --z0: #8A9AA3; --z1: #3C7BD9; --z2: #1B9A5A; --z3: #D98410; --z4: #D23A4A;
-    --radius-lg: 18px; --radius-sm: 8px;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #121B21; --panel: #1A262E; --ink: #E4ECF0; --muted: #93A4AE; --line: #2E3E48;
-      --accent: #7EA2FF; --heart: #FF6F86; --ok: #4CC38A; --warn: #E0A43C; --err: #F07171; --idle: #56666F;
-      --z0: #6E7F88; --z1: #6C9EF0; --z2: #43C283; --z3: #F0A640; --z4: #F26878;
-    }
+    --bg: #06080A; --bar: #0D1114; --panel: #12171B; --field: #1A2126; --line: #232B31;
+    --ink: #F1F4F6; --muted: #8C99A2; --accent: #4DA3FF; --ok: #3DD68C; --warn: #F2B33D; --err: #FF5A6A;
+    --off: #1A2024;
+    --z1: #6E7B85; --z2: #1C9AD6; --z3: #36A852; --z4: #F0921E; --z5: #E3334F;
+    --display: "Barlow Semi Condensed", "Arial Narrow", "Segoe UI", system-ui, sans-serif;
+    --text: "Barlow", "Segoe UI", system-ui, sans-serif;
   }
   * { box-sizing: border-box; }
-  html, body { margin: 0; }
-  body { background: var(--bg); color: var(--ink); font-family: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 16px; line-height: 1.5; }
-  .wrap { max-width: 1480px; margin: 0 auto; padding: 28px 24px 56px; }
-
-  .top { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px 24px; margin-bottom: 20px; }
-  h1 { font-size: 1.75rem; line-height: 1.2; font-weight: 600; margin: 0; letter-spacing: -0.01em; }
-  .count { color: var(--muted); margin: 4px 0 0; font-variant-numeric: tabular-nums; }
-  .count strong { color: var(--ink); font-weight: 600; }
-  .actions { display: flex; flex-wrap: wrap; gap: 10px; }
-
-  .settings { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; padding: 12px 0 18px; margin-bottom: 22px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: .9375rem; }
-  .settings label { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
-  .settings input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--accent); }
-  .settings input[type="number"] { width: 76px; font: inherit; padding: 5px 8px; border-radius: var(--radius-sm); border: 1.5px solid var(--line); background: var(--panel); color: var(--ink); }
-  .settings .spacer { flex: 1; }
-
-  button { font: inherit; font-weight: 500; border-radius: 999px; padding: 10px 20px; cursor: pointer; border: 1.5px solid var(--line); background: transparent; color: var(--ink); }
-  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
-  @media (prefers-color-scheme: dark) { button.primary { color: #0E1620; } }
-  button.small { padding: 5px 14px; font-size: .875rem; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: var(--bg); color: var(--ink); font-family: var(--text); font-size: 16px; line-height: 1.4;
+    display: grid; grid-template-rows: auto minmax(0, 1fr); overflow: hidden;
+  }
+  button { font: inherit; font-weight: 600; cursor: pointer; color: var(--ink); background: var(--field); border: 1px solid var(--line); border-radius: 8px; padding: 9px 16px; }
+  button:hover { border-color: #3A454D; }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #031222; }
   button.danger { color: var(--err); }
-  button:disabled { opacity: .45; cursor: not-allowed; }
-  button:focus-visible, input:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+  button:focus-visible, input:focus-visible, summary:focus-visible, .tile:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
   [hidden] { display: none !important; }
 
-  .notice { border-left: 4px solid var(--warn); background: var(--panel); padding: 14px 16px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin-bottom: 20px; }
-  .notice.err { border-color: var(--err); }
-  .notice p { margin: 0; } .notice p + p { margin-top: 6px; }
-  .notice code { font-size: .875rem; overflow-wrap: anywhere; }
-
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 16px; }
-  .empty { grid-column: 1 / -1; order: -1; text-align: center; padding: 56px 16px; color: var(--muted); border: 1.5px dashed var(--line); border-radius: var(--radius-lg); }
-  .empty strong { display: block; color: var(--ink); font-size: 1.125rem; font-weight: 600; margin-bottom: 4px; }
-
-  .card { --zone: var(--z0); position: relative; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 16px 18px 14px; overflow: hidden; }
-  .card::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 6px; background: var(--zone); transition: background .4s; }
-  .card[data-zone="1"] { --zone: var(--z1); } .card[data-zone="2"] { --zone: var(--z2); }
-  .card[data-zone="3"] { --zone: var(--z3); } .card[data-zone="4"] { --zone: var(--z4); }
-  .card:not([data-state="connected"]) { opacity: .72; }
-  .card:not([data-state="connected"])::before { background: var(--idle); }
-
-  .head { display: flex; align-items: center; gap: 12px; margin-top: 4px; }
-  .num {
-    flex: none; width: 52px; height: 52px; border-radius: 14px; text-align: center;
-    font: inherit; font-size: 1.5rem; font-weight: 600; font-variant-numeric: tabular-nums;
-    border: 1.5px solid var(--line); background: var(--bg); color: var(--ink); padding: 0;
+  /* ---------- Barre du haut ---------- */
+  .bar {
+    display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 20px;
+    padding: 10px 18px; background: var(--bar); border-bottom: 1px solid var(--line);
   }
-  .num::placeholder { font-size: .875rem; font-weight: 500; color: var(--muted); }
-  .num:placeholder-shown { border-style: dashed; border-color: var(--warn); }
-  .owner { min-width: 0; flex: 1; font: inherit; font-size: 1.375rem; font-weight: 600; line-height: 1.2; color: var(--ink); background: transparent; border: 0; border-bottom: 1.5px dashed transparent; padding: 4px 0 2px; }
-  .owner::placeholder { color: var(--muted); font-weight: 500; }
-  .owner:hover, .owner:focus { border-bottom-color: var(--line); outline: none; }
-  .owner:focus-visible { border-bottom-color: var(--accent); }
+  .brand { display: flex; flex-direction: column; min-width: 0; }
+  .brand b { font-family: var(--display); font-weight: 700; font-size: 1.35rem; letter-spacing: .01em; line-height: 1.1; }
+  .brand span { color: var(--muted); font-size: .875rem; font-variant-numeric: tabular-nums; }
+  .chrono { display: flex; align-items: center; gap: 12px; }
+  .time {
+    font-family: var(--display); font-weight: 700; font-variant-numeric: tabular-nums;
+    font-size: clamp(2rem, 6vh, 3.6rem); line-height: 1; min-width: 4.2ch; text-align: center; letter-spacing: .01em;
+  }
+  .chrono.running .time { color: var(--ok); }
+  .chrono button { border-radius: 999px; padding: 8px 18px; }
+  .right { display: flex; align-items: center; justify-content: flex-end; gap: 16px; min-width: 0; }
+  .legend { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; }
+  .legend span { font-size: .75rem; font-weight: 600; padding: 3px 7px; border-radius: 4px; color: #fff; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .icon-btn { position: relative; padding: 9px 12px; }
+  .icon-btn .badge { position: absolute; top: -4px; right: -4px; width: 12px; height: 12px; border-radius: 50%; background: var(--warn); border: 2px solid var(--bar); }
+  @media (max-width: 1100px) { .legend { display: none; } }
 
-  .sub { display: flex; justify-content: space-between; gap: 8px; color: var(--muted); font-size: .8125rem; margin: 8px 0 10px; }
-  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--idle); margin-right: 6px; vertical-align: 1px; }
-  .card[data-state="connected"] .dot { background: var(--ok); }
-  .card[data-state="connecting"] .dot { background: var(--accent); }
-  .card[data-state="error"] .dot { background: var(--err); }
+  /* ---------- Mur des élèves ---------- */
+  .grid { display: grid; gap: 10px; padding: 12px; min-height: 0; }
+  .empty { place-self: center; text-align: center; color: var(--muted); max-width: 44ch; }
+  .empty b { display: block; color: var(--ink); font-family: var(--display); font-size: 1.6rem; margin-bottom: 6px; }
+  .empty button { margin-top: 18px; }
 
-  .bpm-row { display: flex; align-items: baseline; gap: 8px; }
-  .bpm { font-size: 3.5rem; font-weight: 600; line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: -0.03em; color: var(--zone); transition: color .4s; }
-  .card:not([data-state="connected"]) .bpm { color: var(--muted); }
-  .unit { color: var(--muted); }
-  .heart { width: 14px; height: 14px; border-radius: 50%; background: var(--heart); margin-left: auto; align-self: center; opacity: .25; }
-  .card.beating .heart { opacity: 1; animation: beat var(--beat, 1s) ease-out infinite; }
-  @keyframes beat { 0% { transform: scale(1.4); } 35%, 100% { transform: scale(1); } }
-  @media (prefers-reduced-motion: reduce) { .card.beating .heart { animation: none; } }
+  .tile {
+    --zc: var(--off);
+    container-type: size; min-width: 0; min-height: 0; position: relative; overflow: hidden;
+    background: var(--zc); border-radius: 10px; color: #fff; cursor: pointer;
+    transition: background-color .5s;
+  }
+  .t-in { position: absolute; inset: 0; display: flex; flex-direction: column; padding: 5cqh 5cqw 5cqh; }
+  .tile[data-zone="1"] { --zc: var(--z1); } .tile[data-zone="2"] { --zc: var(--z2); } .tile[data-zone="3"] { --zc: var(--z3); }
+  .tile[data-zone="4"] { --zc: var(--z4); } .tile[data-zone="5"] { --zc: var(--z5); }
+  .tile:not([data-state="connected"]) { --zc: var(--off); color: #9AA6AE; }
 
-  .zone-label { font-size: .875rem; font-weight: 500; color: var(--zone); margin-top: 4px; min-height: 1.3em; }
-  .card:not([data-state="connected"]) .zone-label { color: var(--muted); }
-  .bar { height: 6px; border-radius: 3px; background: var(--line); margin: 6px 0 2px; overflow: hidden; }
-  .bar i { display: block; height: 100%; width: 0; background: var(--zone); transition: width .4s, background .4s; }
-  canvas { display: block; width: 100%; height: 44px; margin: 10px 0 6px; }
-  .meta { color: var(--muted); font-size: .875rem; margin: 0; font-variant-numeric: tabular-nums; }
-  .meta.steps { color: var(--ink); font-weight: 500; }
-  .meta.alert { color: var(--warn); }
-  .card-actions { display: flex; gap: 8px; margin-top: 12px; }
+  .t-head { display: flex; align-items: baseline; gap: .35em; font-family: var(--display); font-weight: 700; font-size: min(15cqh, 11cqw); line-height: 1.1; white-space: nowrap; }
+  .t-num { opacity: .75; font-variant-numeric: tabular-nums; }
+  .t-name { overflow: hidden; text-overflow: ellipsis; }
+  .t-name.placeholder { opacity: .55; font-weight: 600; }
 
-  details.log-wrap { margin-top: 36px; }
-  details.log-wrap summary { cursor: pointer; font-weight: 600; margin-bottom: 10px; }
-  .log { max-height: 280px; overflow-y: auto; margin: 0; padding: 12px 16px; list-style: none; font-size: .875rem; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-lg); }
-  .log li { padding: 4px 0; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: 72px 1fr; gap: 10px; }
-  .log li:last-child { border-bottom: 0; }
+  .t-main { flex: 1; min-height: 0; min-width: 0; display: flex; align-items: center; justify-content: space-between; gap: 3cqw; }
+  .t-hr { display: flex; align-items: center; gap: .3em; font-family: var(--display); font-weight: 600; font-size: min(15cqh, 9cqw); font-variant-numeric: tabular-nums; }
+  .t-hr svg { width: .9em; height: .9em; fill: currentColor; }
+  .tile.beating .t-hr svg { animation: beat var(--beat, 1s) ease-out infinite; }
+  @keyframes beat { 0% { transform: scale(1.3); } 35%, 100% { transform: scale(1); } }
+  @media (prefers-reduced-motion: reduce) { .tile.beating .t-hr svg { animation: none; } }
+  .t-pct { font-family: var(--display); font-weight: 700; font-size: min(46cqh, 25cqw); line-height: .9; font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+  .t-pct small { font-size: .45em; font-weight: 600; margin-left: .04em; }
+  .t-status { font-family: var(--display); font-weight: 600; font-size: min(12cqh, 8cqw); }
+
+  .t-zones { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1.4cqw; }
+  .zc {
+    background: rgba(0, 0, 0, .28); border-radius: 3px; border-top: max(3px, 2.2cqh) solid var(--c);
+    text-align: center; font-family: var(--display); font-weight: 600; font-size: min(9cqh, 4.3cqw); overflow: hidden; white-space: nowrap;
+    font-variant-numeric: tabular-nums; padding: .15em 0 .1em; color: rgba(255, 255, 255, .92);
+  }
+  .zc.on { background: rgba(255, 255, 255, .26); color: #fff; }
+  .tile:not([data-state="connected"]) .zc { color: #9AA6AE; }
+  .t-flag { position: absolute; top: 4cqh; right: 4cqw; font-size: min(8cqh, 5cqw); font-weight: 600; background: rgba(0,0,0,.35); padding: .1em .45em; border-radius: 4px; }
+
+  /* ---------- Panneau de réglages ---------- */
+  .scrim { position: fixed; inset: 0; background: rgba(0, 0, 0, .55); opacity: 0; pointer-events: none; transition: opacity .2s; }
+  .panel {
+    position: fixed; top: 0; right: 0; height: 100%; width: min(720px, 100vw); background: var(--panel);
+    border-left: 1px solid var(--line); transform: translateX(100%); transition: transform .25s ease;
+    display: flex; flex-direction: column;
+  }
+  body.panel-open .scrim { opacity: 1; pointer-events: auto; }
+  body.panel-open .panel { transform: none; }
+  @media (prefers-reduced-motion: reduce) { .panel, .scrim { transition: none; } }
+  .p-head { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .p-head h2 { font-family: var(--display); font-size: 1.5rem; margin: 0; }
+  .p-body { overflow-y: auto; padding: 18px 20px 40px; }
+  .p-body h3 { font-family: var(--display); font-size: 1.15rem; margin: 26px 0 10px; }
+  .p-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+  .p-settings { display: flex; flex-wrap: wrap; gap: 14px 28px; margin-top: 16px; color: var(--muted); }
+  .p-settings label { display: inline-flex; align-items: center; gap: 8px; }
+  .p-settings input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--accent); }
+  input.field { font: inherit; color: var(--ink); background: var(--field); border: 1px solid var(--line); border-radius: 6px; padding: 7px 9px; width: 100%; min-width: 0; }
+  input.field::placeholder { color: #5D6A73; }
+  .p-settings input.field { width: 80px; }
+
+  .rows { display: flex; flex-direction: column; }
+  .row-h, .row { display: grid; grid-template-columns: 64px minmax(0, 1.4fr) 82px minmax(0, 1.3fr) auto; gap: 10px; align-items: center; }
+  .row-h { color: var(--muted); font-size: .8125rem; padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+  .row { padding: 8px 0; border-bottom: 1px solid var(--line); }
+  .row.flash { background: rgba(77, 163, 255, .12); }
+  .row .num { text-align: center; font-weight: 600; }
+  .row .num:placeholder-shown { border-color: var(--warn); }
+  .r-info { font-size: .8125rem; color: var(--muted); line-height: 1.3; overflow-wrap: anywhere; }
+  .r-info b { color: var(--ink); font-weight: 500; }
+  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #56626A; margin-right: 5px; }
+  .row[data-state="connected"] .dot { background: var(--ok); }
+  .row[data-state="connecting"] .dot { background: var(--accent); }
+  .row button { padding: 6px 10px; font-size: .8125rem; }
+  .p-empty { color: var(--muted); padding: 14px 0; }
+
+  .notice { border-left: 3px solid var(--warn); background: var(--field); padding: 12px 14px; border-radius: 0 6px 6px 0; margin-bottom: 14px; font-size: .9375rem; }
+  .notice.err { border-color: var(--err); }
+  .notice p { margin: 0; } .notice p + p { margin-top: 4px; }
+  .notice code { overflow-wrap: anywhere; font-size: .8125rem; }
+  .help { color: var(--muted); font-size: .9375rem; }
+  .help p { margin: 0 0 8px; }
+  .help b { color: var(--ink); font-weight: 600; }
+
+  details summary { cursor: pointer; font-family: var(--display); font-weight: 600; font-size: 1.15rem; margin: 26px 0 10px; }
+  .log { max-height: 260px; overflow-y: auto; margin: 0; padding: 0; list-style: none; font-size: .8125rem; }
+  .log li { padding: 4px 0; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: 64px 1fr; gap: 10px; }
   .log time { color: var(--muted); font-variant-numeric: tabular-nums; }
   .log .warn { color: var(--warn); } .log .err { color: var(--err); } .log .ok { color: var(--ok); }
-
-  .help { margin-top: 28px; color: var(--muted); font-size: .9375rem; max-width: 80ch; }
-  .help h2 { font-size: 1rem; color: var(--ink); font-weight: 600; margin: 0 0 4px; }
-  .help p { margin: 0 0 14px; }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="top">
-    <div>
-      <h1>Cardio de la classe</h1>
-      <p class="count" id="count"><strong>0</strong> capteur connecté</p>
+  <header class="bar">
+    <div class="brand">
+      <b>Cardio de la classe</b>
+      <span id="count">0 capteur connecté</span>
     </div>
-    <div class="actions">
-      <button id="btnNewSession">Nouvelle séance</button>
-      <button id="btnExport">Exporter la séance (CSV)</button>
-      <button id="btnFullscreen">Plein écran</button>
+    <div class="chrono" id="chrono">
+      <button id="btnChrono" class="primary">Démarrer</button>
+      <span class="time" id="time">00:00</span>
+      <button id="btnChronoReset">Remettre à zéro</button>
     </div>
-  </div>
+    <div class="right">
+      <div class="legend" id="legend" aria-label="Zones de fréquence cardiaque"></div>
+      <button class="icon-btn" id="btnFullscreen" title="Plein écran">Plein écran</button>
+      <button class="icon-btn" id="btnPanel" title="Réglages, élèves et export">Réglages<span class="badge" id="badge" hidden></span></button>
+    </div>
+  </header>
 
-  <div class="settings">
-    <label>FC max de référence <input type="number" id="fcMax" min="120" max="230" value="200"> bpm</label>
-    <label><input type="checkbox" id="optSteps"> Compter les pas</label>
-    <span class="spacer"></span>
-    <button class="small" id="btnAdd">Ajouter un capteur au parc</button>
-  </div>
-
-  <div id="notices"></div>
-
-  <div class="grid" id="grid">
+  <main class="grid" id="grid">
     <div class="empty" id="empty">
-      <strong>Votre parc de capteurs est vide</strong>
-      Allumez un capteur, cliquez sur « Ajouter un capteur au parc », puis tapez son numéro dans la case N°.
+      <b>Aucun capteur dans le parc</b>
+      Ouvrez les réglages pour ajouter vos capteurs une première fois et leur donner un numéro.
+      <br><button class="primary" id="btnEmptyOpen">Ouvrir les réglages</button>
     </div>
-  </div>
+  </main>
 
-  <div class="help">
-    <h2>Première fois : créer le parc</h2>
-    <p>Allumez les capteurs. Pour chacun, cliquez sur « Ajouter un capteur au parc », choisissez son « Polar Sense … », puis tapez le numéro écrit sur le capteur. Le PC s'en souvient ensuite.</p>
-    <h2>À chaque séance</h2>
-    <p>Ouvrez la page et allumez les capteurs : ils se connectent seuls, rangés par numéro. Tapez simplement le prénom de l'élève. En fin de séance, exportez le CSV puis cliquez sur « Nouvelle séance » pour effacer les prénoms.</p>
-  </div>
+  <div class="scrim" id="scrim"></div>
+  <aside class="panel" id="panel" aria-label="Réglages" aria-hidden="true">
+    <div class="p-head">
+      <h2>Réglages de la séance</h2>
+      <button id="btnClose">Fermer</button>
+    </div>
+    <div class="p-body">
+      <div id="notices"></div>
+      <div class="p-actions">
+        <button class="primary" id="btnAdd">Ajouter un capteur au parc</button>
+        <button id="btnExport">Exporter la séance (CSV)</button>
+        <button class="danger" id="btnNewSession">Nouvelle séance</button>
+      </div>
+      <div class="p-settings">
+        <label>FC max par défaut <input class="field" type="number" id="fcMax" min="120" max="230" value="200"> bpm</label>
+        <label><input type="checkbox" id="optSteps"> Compter les pas (charge le Bluetooth)</label>
+      </div>
 
-  <details class="log-wrap">
-    <summary>Journal</summary>
-    <ul class="log" id="log"></ul>
-  </details>
-</div>
+      <h3>Élèves et capteurs</h3>
+      <div class="row-h"><span>N°</span><span>Prénom</span><span>FC max</span><span>Capteur</span><span></span></div>
+      <div class="rows" id="rows"><p class="p-empty" id="rowsEmpty">Aucun capteur. Allumez-en un et cliquez sur « Ajouter un capteur au parc ».</p></div>
+
+      <h3>Mode d'emploi</h3>
+      <div class="help">
+        <p><b>Une seule fois :</b> ajoutez chaque capteur au parc et tapez le numéro écrit dessus.</p>
+        <p><b>À chaque séance :</b> allumez les capteurs, ils se connectent seuls. Tapez les prénoms ici (un clic sur une tuile ouvre directement sa ligne). Laissez « FC max » vide pour utiliser la valeur par défaut.</p>
+        <p><b>Chrono :</b> le temps passé dans chaque zone n'est compté que lorsque le chrono tourne. Barre d'espace : démarrer ou mettre en pause.</p>
+        <p><b>Fin de séance :</b> exportez le CSV, puis « Nouvelle séance » efface prénoms, chrono et temps de zones.</p>
+      </div>
+
+      <details>
+        <summary>Journal technique</summary>
+        <ul class="log" id="log"></ul>
+      </details>
+    </div>
+  </aside>
 
 <script>
 (() => {
@@ -165,44 +216,48 @@
   const PMD_DATA    = 'fb005c82-02e7-f387-1cad-8acd2d8df0c8';
   const PMD_ACC = 0x02;
   const OPTIONAL_SERVICES = ['device_information', 'battery_service', 'heart_rate', PMD_SERVICE];
-  const QUICK_RETRIES = 4;       // reconnexions rapides après une coupure
-  const POLL_DELAY = 45000;      // ensuite, un essai toutes les 45 s tant que la page est ouverte
-  const HR_HISTORY = 120;
+  const QUICK_RETRIES = 4;
+  const POLL_DELAY = 45000;
   const ZONES = [
-    { max: 0.60, label: 'Très léger' }, { max: 0.70, label: 'Léger' }, { max: 0.80, label: 'Modéré' },
-    { max: 0.90, label: 'Intense' }, { max: Infinity, label: 'Maximal' },
+    { max: 0.60, name: 'Zone 1', range: '< 60 %',   color: 'var(--z1)' },
+    { max: 0.70, name: 'Zone 2', range: '60–70 %',  color: 'var(--z2)' },
+    { max: 0.80, name: 'Zone 3', range: '70–80 %',  color: 'var(--z3)' },
+    { max: 0.90, name: 'Zone 4', range: '80–90 %',  color: 'var(--z4)' },
+    { max: Infinity, name: 'Zone 5', range: '> 90 %', color: 'var(--z5)' },
   ];
+  const HEART_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.3l-1.5-1.3C5.4 15.4 2 12.3 2 8.5 2 5.4 4.4 3 7.5 3c1.7 0 3.4.8 4.5 2.1C13.1 3.8 14.8 3 16.5 3 19.6 3 22 5.4 22 8.5c0 3.8-3.4 6.9-8.5 11.5L12 21.3z"/></svg>';
 
   const $ = id => document.getElementById(id);
   const ui = {
-    grid: $('grid'), empty: $('empty'), count: $('count'), log: $('log'), notices: $('notices'),
-    add: $('btnAdd'), fullscreen: $('btnFullscreen'), exportCsv: $('btnExport'), newSession: $('btnNewSession'),
-    fcMax: $('fcMax'), steps: $('optSteps'),
+    grid: $('grid'), empty: $('empty'), count: $('count'), log: $('log'), notices: $('notices'), badge: $('badge'),
+    rows: $('rows'), rowsEmpty: $('rowsEmpty'), legend: $('legend'),
+    chrono: $('chrono'), time: $('time'), btnChrono: $('btnChrono'), btnChronoReset: $('btnChronoReset'),
+    add: $('btnAdd'), exportCsv: $('btnExport'), newSession: $('btnNewSession'),
+    fullscreen: $('btnFullscreen'), panelBtn: $('btnPanel'), close: $('btnClose'), scrim: $('scrim'), panel: $('panel'),
+    emptyOpen: $('btnEmptyOpen'), fcMax: $('fcMax'), steps: $('optSteps'),
   };
 
-  const sensors = new Map();   // nom du capteur -> état en mémoire
-  let archive = [];            // séances terminées (capteur éteint) gardées pour l'export
+  const sensors = new Map();
+  let archive = [];
 
-  // ---------- Stockage (parc et préférences) ----------
+  // ---------- Stockage ----------
   const store = {
-    get(key, def) { try { return JSON.parse(localStorage.getItem(key)) ?? def; } catch { return def; } },
-    set(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); } catch {} },
+    get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
   };
-  let parc = store.get('cardio-parc', {}); // { "Polar Sense C7A26B2E": { num: "7" } }
+  let parc = store.get('cardio-parc', {});
   const saveParc = () => store.set('cardio-parc', parc);
   const savePrefs = () => store.set('cardio-prefs', { fcMax: +ui.fcMax.value, steps: ui.steps.checked });
-  const fcMax = () => Math.min(230, Math.max(120, +ui.fcMax.value || 200));
+  const globalFcMax = () => Math.min(230, Math.max(120, +ui.fcMax.value || 200));
+  const fcMaxOf = s => s.fcmax || globalFcMax();
+  const zoneOf = (bpm, s) => ZONES.findIndex(z => bpm / fcMaxOf(s) < z.max);
 
   // ---------- Journal ----------
   function log(msg, kind = '') {
     const li = document.createElement('li');
-    const t = document.createElement('time');
-    t.textContent = new Date().toLocaleTimeString('fr-FR');
-    const span = document.createElement('span');
-    span.textContent = msg;
-    if (kind) span.className = kind;
-    li.append(t, span);
-    ui.log.prepend(li);
+    const t = document.createElement('time'); t.textContent = new Date().toLocaleTimeString('fr-FR');
+    const span = document.createElement('span'); span.textContent = msg; if (kind) span.className = kind;
+    li.append(t, span); ui.log.prepend(li);
     while (ui.log.children.length > 400) ui.log.lastChild.remove();
     console.log('[Polar]', msg);
   }
@@ -211,8 +266,10 @@
     div.className = 'notice' + (err ? ' err' : '');
     div.innerHTML = html;
     ui.notices.append(div);
+    updateBadge();
     return div;
   }
+  const updateBadge = () => { ui.badge.hidden = !ui.notices.children.length; };
   function explain(e) {
     switch (e && e.name) {
       case 'NotFoundError': return 'aucun capteur sélectionné';
@@ -223,18 +280,40 @@
       default: return (e && e.message) || String(e);
     }
   }
-
   const shortName = s => s.key.replace(/^Polar\s*/, '');
   const label = s => (s.num ? 'N° ' + s.num : shortName(s)) + (s.owner ? ' (' + s.owner + ')' : '');
+  const numVal = n => { const v = parseInt(n, 10); return Number.isFinite(v) ? v : 1e9; };
+  const fmt = ms => {
+    const t = Math.floor(ms / 1000), h = Math.floor(t / 3600), m = Math.floor((t % 3600) / 60), s = t % 60;
+    return (h ? h + ':' + String(m).padStart(2, '0') : String(m).padStart(2, '0')) + ':' + String(s).padStart(2, '0');
+  };
 
   let queue = Promise.resolve();
   function enqueue(fn) { const p = queue.then(fn, fn); queue = p.catch(() => {}); return p; }
-  function withTimeout(promise, ms, what) {
-    return Promise.race([promise, new Promise((_, rej) => setTimeout(() => rej(new Error(what + ' : délai dépassé')), ms))]);
+  function withTimeout(p, ms, what) { return Promise.race([p, new Promise((_, r) => setTimeout(() => r(new Error(what + ' : délai dépassé')), ms))]); }
+
+  // ---------- Chrono ----------
+  const chrono = { running: false, since: 0, acc: 0, elapsed() { return this.acc + (this.running ? Date.now() - this.since : 0); } };
+  function toggleChrono() {
+    if (chrono.running) { chrono.acc = chrono.elapsed(); chrono.running = false; log('Chrono en pause à ' + fmt(chrono.acc) + '.'); }
+    else { chrono.since = Date.now(); chrono.running = true; log('Chrono démarré.'); }
+    renderChrono();
+  }
+  function resetChrono(ask = true) {
+    if (ask && chrono.elapsed() > 0 && !confirm('Remettre le chrono et les temps de zones à zéro ?')) return;
+    chrono.running = false; chrono.acc = 0;
+    for (const s of sensors.values()) { s.session.zones = [0, 0, 0, 0, 0]; renderZones(s); }
+    renderChrono();
+    if (ask) log('Chrono et temps de zones remis à zéro.');
+  }
+  function renderChrono() {
+    ui.time.textContent = fmt(chrono.elapsed());
+    ui.chrono.classList.toggle('running', chrono.running);
+    ui.btnChrono.textContent = chrono.running ? 'Pause' : (chrono.acc ? 'Reprendre' : 'Démarrer');
   }
 
   // ---------- Capteurs ----------
-  const newSession = () => ({ start: null, hr: [], rec: [], min: null, max: null, sum: 0, n: 0, steps: 0, lostAt: null });
+  const newSession = () => ({ start: null, rec: [], sum: 0, n: 0, max: null, steps: 0, zones: [0, 0, 0, 0, 0], lostAt: null });
 
   function getSensor(device) {
     const key = device.name || device.id;
@@ -250,151 +329,206 @@
     }
     if (!parc[key]) { parc[key] = { num: '' }; saveParc(); }
     s = {
-      key, device, num: parc[key].num || '', owner: '', state: 'idle', retries: 0, timer: null, manual: false,
-      watching: false, battery: null, session: newSession(), stepper: makeStepper(),
+      key, device, num: parc[key].num || '', owner: '', fcmax: null, state: 'idle', retries: 0, timer: null, manual: false,
+      watching: false, battery: null, bpm: 0, bpmAt: 0, session: newSession(), stepper: makeStepper(),
       pmd: { cp: null, pending: null, resBytes: 2, active: false },
     };
     s.h = {
       disc: () => onDisconnected(s),
       adv: () => { if (s.state === 'waiting' || s.state === 'error') { s.retries = 0; connectSensor(s); } },
       hr: ev => onHeartRate(s, ev),
-      bat: ev => { s.battery = ev.target.value.getUint8(0); renderSub(s); },
+      bat: ev => { s.battery = ev.target.value.getUint8(0); renderInfo(s); },
       cp: ev => onPmdControl(s, ev),
       data: ev => onPmdData(s, ev),
     };
-    s.stepper.onStep = n => { s.session.steps += n; renderSteps(s); };
+    s.stepper.onStep = n => { s.session.steps += n; renderInfo(s); };
     device.addEventListener('gattserverdisconnected', s.h.disc);
-    buildCard(s);
+    buildTile(s);
+    buildRow(s);
     sensors.set(key, s);
+    applyOrder(s);
     updateCount();
+    fitGrid();
     return s;
   }
 
-  function buildCard(s) {
+  function buildTile(s) {
     const el = document.createElement('article');
-    el.className = 'card';
-    el.innerHTML = `
-      <div class="head">
-        <input class="num" type="text" inputmode="numeric" maxlength="4" placeholder="N°" aria-label="Numéro du capteur" title="Numéro écrit sur le capteur">
-        <input class="owner" type="text" maxlength="30" placeholder="Prénom" aria-label="Prénom de l'élève">
+    el.className = 'tile';
+    el.tabIndex = 0;
+    el.innerHTML = `<div class="t-in">
+      <div class="t-head"><span class="t-num"></span><span class="t-name"></span></div>
+      <span class="t-flag" hidden></span>
+      <div class="t-main">
+        <div class="t-hr">${HEART_SVG}<span class="t-bpm">--</span></div>
+        <div class="t-pct">--</div>
       </div>
-      <div class="sub"><span><span class="dot"></span><span class="st">En attente</span></span><span class="dev"></span></div>
-      <div class="bpm-row"><span class="bpm">--</span><span class="unit">bpm</span><span class="heart" aria-hidden="true"></span></div>
-      <div class="zone-label"></div>
-      <div class="bar"><i></i></div>
-      <canvas aria-hidden="true"></canvas>
-      <p class="meta stats">Min -- · Moy -- · Max --</p>
-      <p class="meta steps" hidden></p>
-      <p class="meta dur"></p>
-      <p class="meta alert" hidden>Contact peau non détecté : ajuster le brassard.</p>
-      <div class="card-actions">
-        <button class="small reco" hidden>Reconnecter</button>
-        <button class="small danger rm">Retirer du parc</button>
-      </div>`;
+      <div class="t-zones">${ZONES.map((z, i) => `<div class="zc" style="--c:${z.color}" title="${z.name} (${z.range})">00:00</div>`).join('')}</div></div>`;
     const q = sel => el.querySelector(sel);
-    s.el = {
-      root: el, num: q('.num'), owner: q('.owner'), st: q('.st'), dev: q('.dev'), bpm: q('.bpm'), zone: q('.zone-label'),
-      bar: q('.bar i'), canvas: q('canvas'), stats: q('.stats'), steps: q('.steps'), dur: q('.dur'),
-      alert: q('.alert'), reco: q('.reco'), rm: q('.rm'),
-    };
-    s.el.num.value = s.num;
-    s.el.num.addEventListener('change', () => {
-      s.num = s.el.num.value.trim();
-      parc[s.key] = { num: s.num };
-      saveParc();
-      applyOrder(s);
-      log(shortName(s) + (s.num ? ' enregistré sous le N° ' + s.num + '.' : ' : numéro effacé.'), 'ok');
-    });
-    s.el.owner.addEventListener('change', () => {
-      s.owner = s.el.owner.value.trim();
-      log(s.owner ? label(s) + ' : prénom enregistré pour la séance.' : 'Prénom retiré de ' + label(s) + '.');
-    });
-    [s.el.num, s.el.owner].forEach(inp => inp.addEventListener('keydown', e => { if (e.key === 'Enter') inp.blur(); }));
-    s.el.reco.addEventListener('click', () => { s.retries = 0; connectSensor(s); });
-    s.el.rm.addEventListener('click', () => removeSensor(s));
+    s.tile = { root: el, num: q('.t-num'), name: q('.t-name'), bpm: q('.t-bpm'), pct: q('.t-pct'), flag: q('.t-flag'), zones: [...el.querySelectorAll('.zc')] };
+    const open = () => openPanel(s);
+    el.addEventListener('click', open);
+    el.addEventListener('keydown', e => { if (e.key === 'Enter') open(); });
     ui.grid.append(el);
-    applyOrder(s);
-    renderSub(s);
-    renderSteps(s);
+    renderHead(s);
   }
 
+  function buildRow(s) {
+    const el = document.createElement('div');
+    el.className = 'row';
+    el.innerHTML = `
+      <input class="field num" type="text" inputmode="numeric" maxlength="4" placeholder="N°" aria-label="Numéro du capteur">
+      <input class="field owner" type="text" maxlength="24" placeholder="Prénom" aria-label="Prénom de l'élève">
+      <input class="field fc" type="number" min="120" max="230" placeholder="${globalFcMax()}" aria-label="FC max de l'élève">
+      <div class="r-info"></div>
+      <button class="danger rm" title="Retirer ce capteur du parc">Retirer</button>`;
+    const q = sel => el.querySelector(sel);
+    s.row = { root: el, num: q('.num'), owner: q('.owner'), fc: q('.fc'), info: q('.r-info'), rm: q('.rm') };
+    s.row.num.value = s.num;
+    s.row.num.addEventListener('change', () => {
+      s.num = s.row.num.value.trim();
+      parc[s.key] = { num: s.num }; saveParc();
+      applyOrder(s); renderHead(s);
+      log(shortName(s) + (s.num ? ' enregistré sous le N° ' + s.num + '.' : ' : numéro effacé.'), 'ok');
+    });
+    s.row.owner.addEventListener('input', () => { s.owner = s.row.owner.value.trim(); renderHead(s); });
+    s.row.owner.addEventListener('change', () => { if (s.owner) log(label(s) + ' : prénom enregistré.'); });
+    s.row.fc.addEventListener('change', () => {
+      const v = parseInt(s.row.fc.value, 10);
+      s.fcmax = v >= 120 && v <= 230 ? v : null;
+      if (!s.fcmax) s.row.fc.value = '';
+      renderLive(s);
+    });
+    [s.row.num, s.row.owner, s.row.fc].forEach(inp => inp.addEventListener('keydown', e => {
+      if (e.key !== 'Enter') return;
+      e.preventDefault();
+      // Entrée : passer au prénom suivant pour saisir la classe rapidement
+      if (inp === s.row.owner) {
+        const list = sorted(), i = list.indexOf(s);
+        if (list[i + 1]) list[i + 1].row.owner.focus(); else inp.blur();
+      } else inp.blur();
+    }));
+    s.row.rm.addEventListener('click', () => removeSensor(s));
+    ui.rows.append(el);
+    ui.rowsEmpty.hidden = true;
+    renderInfo(s);
+  }
+
+  const sorted = () => [...sensors.values()].sort((a, b) => numVal(a.num) - numVal(b.num) || a.key.localeCompare(b.key));
   function applyOrder(s) {
-    const n = parseInt(s.num, 10);
-    s.el.root.style.order = Number.isFinite(n) ? n : 100000;
+    const n = numVal(s.num), o = n === 1e9 ? 100000 : n;
+    s.tile.root.style.order = o; s.row.root.style.order = o;
   }
 
   // ---------- Affichage ----------
-  function setSensorState(s, state, text) {
-    s.state = state;
-    s.el.root.dataset.state = state;
-    s.el.st.textContent = text;
-    s.el.reco.hidden = state === 'connected' || state === 'connecting';
-    if (state !== 'connected') {
-      s.el.bpm.textContent = '--';
-      s.el.zone.textContent = '';
-      s.el.bar.style.width = '0';
-      s.el.root.classList.remove('beating');
-      s.el.alert.hidden = true;
+  function renderHead(s) {
+    s.tile.num.textContent = s.num ? s.num : '';
+    s.tile.num.hidden = !s.num;
+    s.tile.name.textContent = s.owner || (s.num ? 'Capteur ' + s.num : shortName(s));
+    s.tile.name.classList.toggle('placeholder', !s.owner);
+  }
+  function renderLive(s) {
+    const t = s.tile;
+    if (s.state !== 'connected' || !s.bpm) {
+      t.root.removeAttribute('data-zone');
+      t.root.classList.remove('beating');
+      t.bpm.textContent = '--';
+      const txt = { connected: 'Recherche du pouls…', connecting: 'Connexion…', waiting: 'Capteur éteint', error: 'Hors de portée', idle: 'En attente' }[s.state] || '';
+      t.pct.innerHTML = '<span class="t-status"></span>';
+      t.pct.firstChild.textContent = s.session.lostAt && s.state !== 'connected' ? 'Signal perdu' : txt;
+      renderZones(s);
+      return;
     }
-    updateCount();
+    const pct = s.bpm / fcMaxOf(s), zi = zoneOf(s.bpm, s);
+    t.root.dataset.zone = zi + 1;
+    t.bpm.textContent = s.bpm;
+    t.pct.innerHTML = Math.round(pct * 100) + '<small>%</small>';
+    t.root.style.setProperty('--beat', (60 / s.bpm).toFixed(3) + 's');
+    t.root.classList.add('beating');
+    renderZones(s);
   }
-  function renderSub(s) { s.el.dev.textContent = shortName(s) + (s.battery != null ? ' · ' + s.battery + ' %' : ''); }
-  function renderSteps(s) {
-    s.el.steps.hidden = !ui.steps.checked;
-    s.el.steps.textContent = s.session.steps.toLocaleString('fr-FR') + ' pas';
+  function renderZones(s) {
+    const live = s.state === 'connected' && s.bpm ? zoneOf(s.bpm, s) : -1;
+    s.tile.zones.forEach((el, i) => { el.textContent = fmt(s.session.zones[i]); el.classList.toggle('on', i === live); });
   }
-  function renderStats(s) {
-    const x = s.session, avg = x.n ? Math.round(x.sum / x.n) : '--';
-    s.el.stats.textContent = 'Min ' + (x.min ?? '--') + ' · Moy ' + avg + ' · Max ' + (x.max ?? '--');
+  function renderInfo(s) {
+    const st = { connected: 'Connecté', connecting: 'Connexion…', waiting: 'En attente', error: 'Hors de portée', idle: 'En attente' }[s.state] || s.state;
+    const x = s.session;
+    const parts = ['<span class="dot"></span><b></b>'];
+    const extra = [];
+    if (s.battery != null) extra.push(s.battery + ' %');
+    if (x.n) extra.push('moy ' + Math.round(x.sum / x.n) + ' · max ' + x.max);
+    if (ui.steps.checked) extra.push(x.steps + ' pas');
+    s.row.info.innerHTML = parts.join('') + '<br>';
+    s.row.info.querySelector('b').textContent = st;
+    s.row.info.append(document.createTextNode(shortName(s) + (extra.length ? ' · ' + extra.join(' · ') : '')));
+    s.row.root.dataset.state = s.state;
+    const low = s.battery != null && s.battery <= 15;
+    s.tile.flag.hidden = !low;
+    s.tile.flag.textContent = low ? 'Batterie ' + s.battery + ' %' : '';
   }
-  function drawSpark(s) {
-    const c = s.el.canvas, w = c.clientWidth, h = c.clientHeight;
-    if (!w) return;
-    const dpr = window.devicePixelRatio || 1;
-    c.width = w * dpr; c.height = h * dpr;
-    const ctx = c.getContext('2d');
-    ctx.scale(dpr, dpr);
-    const css = getComputedStyle(s.el.root);
-    ctx.strokeStyle = css.getPropertyValue('--line'); ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(0, h - 0.5); ctx.lineTo(w, h - 0.5); ctx.stroke();
-    const d = s.session.hr;
-    if (d.length < 2) return;
-    const lo = Math.min(...d) - 5, hi = Math.max(...d) + 5, off = HR_HISTORY - d.length;
-    const X = i => ((i + off) / (HR_HISTORY - 1)) * w, Y = v => h - 3 - ((v - lo) / (hi - lo)) * (h - 6);
-    ctx.strokeStyle = css.getPropertyValue('--zone'); ctx.lineWidth = 2; ctx.lineJoin = 'round';
-    ctx.beginPath();
-    d.forEach((v, i) => i ? ctx.lineTo(X(i), Y(v)) : ctx.moveTo(X(i), Y(v)));
-    ctx.stroke();
+  function setSensorState(s, state) {
+    s.state = state;
+    s.tile.root.dataset.state = state;
+    if (state !== 'connected') s.bpm = 0;
+    renderLive(s); renderInfo(s); updateCount();
   }
   function updateCount() {
-    const total = sensors.size;
-    const on = [...sensors.values()].filter(s => s.state === 'connected').length;
-    ui.count.innerHTML = '<strong>' + on + '</strong> capteur' + (on > 1 ? 's' : '') + ' connecté' + (on > 1 ? 's' : '') + (total ? ' sur ' + total : '');
+    const total = sensors.size, on = [...sensors.values()].filter(s => s.state === 'connected').length;
+    ui.count.textContent = on + ' capteur' + (on > 1 ? 's' : '') + ' connecté' + (on > 1 ? 's' : '') + (total ? ' sur ' + total : '');
     ui.empty.hidden = total > 0;
+  }
+
+  // Calcule la meilleure grille pour que toutes les tuiles tiennent à l'écran
+  function fitGrid() {
+    const n = sensors.size;
+    if (!n) { ui.grid.style.gridTemplateColumns = '1fr'; ui.grid.style.gridTemplateRows = '1fr'; return; }
+    const cs = getComputedStyle(ui.grid), gap = 10;
+    const W = ui.grid.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    const H = ui.grid.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+    let best = null;
+    for (let c = 1; c <= n; c++) {
+      const r = Math.ceil(n / c);
+      const w = (W - gap * (c - 1)) / c, h = (H - gap * (r - 1)) / r;
+      const score = Math.min(w / 1.45, h);
+      if (!best || score > best.score) best = { c, r, score };
+    }
+    ui.grid.style.gridTemplateColumns = `repeat(${best.c}, minmax(0, 1fr))`;
+    ui.grid.style.gridTemplateRows = `repeat(${best.r}, minmax(0, 1fr))`;
+  }
+
+  // ---------- Panneau ----------
+  function openPanel(s) {
+    document.body.classList.add('panel-open');
+    ui.panel.setAttribute('aria-hidden', 'false');
+    if (s) {
+      setTimeout(() => {
+        s.row.root.scrollIntoView({ block: 'center' });
+        s.row.owner.focus();
+        s.row.root.classList.add('flash');
+        setTimeout(() => s.row.root.classList.remove('flash'), 1200);
+      }, 260);
+    } else ui.close.focus();
+  }
+  function closePanel() {
+    document.body.classList.remove('panel-open');
+    ui.panel.setAttribute('aria-hidden', 'true');
+    if (document.activeElement && ui.panel.contains(document.activeElement)) document.activeElement.blur();
   }
 
   // ---------- Fréquence cardiaque ----------
   function onHeartRate(s, ev) {
     const dv = ev.target.value, flags = dv.getUint8(0);
     const bpm = (flags & 0x01) ? dv.getUint16(1, true) : dv.getUint8(1);
-    const contactSupported = (flags & 0x04) !== 0, contactOk = (flags & 0x02) !== 0;
-    s.el.alert.hidden = !(contactSupported && !contactOk) && bpm > 0;
-    if (!bpm) { s.el.bpm.textContent = '--'; s.el.root.classList.remove('beating'); return; }
-    const pct = bpm / fcMax(), zi = ZONES.findIndex(z => pct < z.max);
-    s.el.bpm.textContent = bpm;
-    s.el.root.dataset.zone = zi;
-    s.el.zone.textContent = ZONES[zi].label + ' · ' + Math.round(pct * 100) + ' % FC max';
-    s.el.bar.style.width = Math.min(100, pct * 100) + '%';
-    s.el.root.style.setProperty('--beat', (60 / bpm).toFixed(3) + 's');
-    s.el.root.classList.add('beating');
-    const x = s.session;
-    x.rec.push([Date.now(), bpm]);
-    x.hr.push(bpm);
-    if (x.hr.length > HR_HISTORY) x.hr.shift();
-    x.min = x.min == null ? bpm : Math.min(x.min, bpm);
-    x.max = x.max == null ? bpm : Math.max(x.max, bpm);
-    x.sum += bpm; x.n++;
-    renderStats(s); drawSpark(s);
+    s.bpm = bpm;
+    s.bpmAt = Date.now();
+    if (bpm) {
+      const x = s.session;
+      x.rec.push([s.bpmAt, bpm, chrono.elapsed()]);
+      x.sum += bpm; x.n++;
+      x.max = x.max == null ? bpm : Math.max(x.max, bpm);
+    }
+    renderLive(s);
   }
 
   // ---------- Estimation des pas ----------
@@ -417,8 +551,7 @@
           const dt = this.t - this.lastStep;
           if (dt >= 0.28) {
             if (dt > 2) this.streak = 0;
-            this.lastStep = this.t;
-            this.streak++;
+            this.lastStep = this.t; this.streak++;
             if (this.streak === 4) this.onStep && this.onStep(4);
             else if (this.streak > 4) this.onStep && this.onStep(1);
           }
@@ -450,10 +583,7 @@
       const type = bytes[i], count = bytes[i + 1]; i += 2;
       const size = SIZES[type]; if (!size) break;
       const vals = [];
-      for (let k = 0; k < count && i + size <= bytes.length; k++) {
-        let v = 0; for (let b = 0; b < size; b++) v += bytes[i + b] * 2 ** (8 * b);
-        vals.push(v); i += size;
-      }
+      for (let k = 0; k < count && i + size <= bytes.length; k++) { let v = 0; for (let b = 0; b < size; b++) v += bytes[i + b] * 2 ** (8 * b); vals.push(v); i += size; }
       out[type] = vals;
     }
     return out;
@@ -471,10 +601,7 @@
     if (channels != null) cmd.push(0x04, 0x01, channels);
     return cmd;
   }
-  function readInt(b, off, size) {
-    let v = 0; for (let i = 0; i < size; i++) v += b[off + i] * 2 ** (8 * i);
-    const max = 2 ** (8 * size); return v >= max / 2 ? v - max : v;
-  }
+  function readInt(b, off, size) { let v = 0; for (let i = 0; i < size; i++) v += b[off + i] * 2 ** (8 * i); const max = 2 ** (8 * size); return v >= max / 2 ? v - max : v; }
   function parseDelta(b, offset, channels, refBytes) {
     const samples = []; let ref = [];
     for (let c = 0; c < channels; c++) { ref.push(readInt(b, offset, refBytes)); offset += refBytes; }
@@ -528,9 +655,7 @@
       if (start[3] !== 0 && start[3] !== 6) throw new Error('démarrage refusé (code ' + start[3] + ')');
       s.stepper.reset(chosen.rate);
       s.pmd.active = true;
-    } catch (e) {
-      log(label(s) + ' : comptage des pas impossible (' + explain(e) + ').', 'warn');
-    }
+    } catch (e) { log(label(s) + ' : comptage des pas impossible (' + explain(e) + ').', 'warn'); }
   }
   async function stopSteps(s) {
     if (!s.pmd.active || !s.device.gatt.connected) { s.pmd.active = false; return; }
@@ -551,19 +676,14 @@
       const svc = await s.device.gatt.getPrimaryService('battery_service');
       const ch = await svc.getCharacteristic('battery_level');
       s.battery = (await ch.readValue()).getUint8(0);
-      renderSub(s);
-      try {
-        ch.removeEventListener('characteristicvaluechanged', s.h.bat);
-        ch.addEventListener('characteristicvaluechanged', s.h.bat);
-        await ch.startNotifications();
-      } catch {}
+      try { ch.removeEventListener('characteristicvaluechanged', s.h.bat); ch.addEventListener('characteristicvaluechanged', s.h.bat); await ch.startNotifications(); } catch {}
     } catch {}
   }
 
   function connectSensor(s, quiet = false) {
     clearTimeout(s.timer);
     s.manual = false;
-    if (!quiet) setSensorState(s, 'connecting', 'Connexion…');
+    if (!quiet) setSensorState(s, 'connecting');
     return enqueue(async () => {
       if (!sensors.has(s.key) || s.state === 'connected') return;
       try {
@@ -574,7 +694,7 @@
         s.retries = 0;
         if (!s.session.start) s.session.start = Date.now();
         s.session.lostAt = null;
-        setSensorState(s, 'connected', 'Connecté');
+        setSensorState(s, 'connected');
         log(label(s) + ' connecté.', 'ok');
       } catch (e) {
         try { if (s.device.gatt.connected) s.device.gatt.disconnect(); } catch {}
@@ -582,42 +702,37 @@
         const on = [...sensors.values()].filter(x => x.state === 'connected').length;
         if (!quiet && on >= 7) log('Avec ' + on + ' capteurs connectés, la carte Bluetooth du PC atteint peut-être sa limite.', 'warn');
         if (s.manual) return;
-        if (s.retries < QUICK_RETRIES) scheduleRetry(s);
-        else goWaiting(s);
+        if (s.retries < QUICK_RETRIES) scheduleRetry(s); else goWaiting(s);
       }
     });
   }
-
   function scheduleRetry(s) {
     s.retries++;
     const delay = Math.min(2 ** s.retries, 16);
-    setSensorState(s, 'connecting', 'Nouvel essai dans ' + delay + ' s');
+    setSensorState(s, 'connecting');
     clearTimeout(s.timer);
     s.timer = setTimeout(() => connectSensor(s), delay * 1000);
   }
-
-  // Capteur injoignable : on considère qu'il est éteint, puis on guette son retour
   async function goWaiting(s) {
     const wasActive = s.session.start != null;
-    setSensorState(s, 'waiting', 'En attente : allumez le capteur');
+    setSensorState(s, 'waiting');
     if (wasActive) endSession(s, 'Capteur éteint ou hors de portée.');
     if (!s.watching && typeof s.device.watchAdvertisements === 'function') {
       try {
         s.device.addEventListener('advertisementreceived', s.h.adv);
         await s.device.watchAdvertisements();
         s.watching = true;
-        return; // la connexion se relancera dès que le capteur se manifeste
+        return;
       } catch { s.device.removeEventListener('advertisementreceived', s.h.adv); }
     }
     if (s.watching) return;
     clearTimeout(s.timer);
     s.timer = setTimeout(() => { if (s.state === 'waiting') connectSensor(s, true); }, POLL_DELAY);
   }
-
   function onDisconnected(s) {
     s.pmd.pending = null; s.pmd.active = false;
     if (!sensors.has(s.key)) return;
-    if (s.manual) { setSensorState(s, 'waiting', 'Déconnecté'); return; }
+    if (s.manual) { setSensorState(s, 'waiting'); return; }
     if (s.state === 'connecting' || s.state === 'waiting') return;
     s.session.lostAt = Date.now();
     log(label(s) + ' : signal perdu, reconnexion…', 'warn');
@@ -625,16 +740,16 @@
     scheduleRetry(s);
   }
 
-  // Fin de séance pour un capteur : archivage pour l'export, puis remise à zéro
+  // Capteur éteint : on archive ses données pour l'export et on libère la tuile
   function endSession(s, reason) {
-    if (s.session.rec.length) archive.push({ num: s.num, key: s.key, owner: s.owner, rec: s.session.rec });
+    if (s.session.rec.length) archive.push(snapshot(s));
     if (reason && s.owner) log(reason + ' ' + label(s) + ' : prénom retiré (données gardées pour l\'export).');
-    s.owner = '';
+    s.owner = ''; s.fcmax = null;
+    s.row.owner.value = ''; s.row.fc.value = '';
     s.session = newSession();
-    s.el.owner.value = '';
-    s.el.dur.textContent = '';
-    renderStats(s); renderSteps(s); drawSpark(s);
+    renderHead(s); renderLive(s); renderInfo(s);
   }
+  const snapshot = s => ({ num: s.num, key: s.key, owner: s.owner, fcmax: fcMaxOf(s), rec: s.session.rec, zones: s.session.zones.slice(), sum: s.session.sum, n: s.session.n, max: s.session.max });
 
   async function removeSensor(s) {
     if (!confirm('Retirer le capteur ' + label(s) + ' du parc ? Il faudra l\'ajouter à nouveau pour l\'utiliser.')) return;
@@ -647,8 +762,9 @@
     try { if (typeof s.device.forget === 'function') await s.device.forget(); } catch {}
     delete parc[s.key]; saveParc();
     sensors.delete(s.key);
-    s.el.root.remove();
-    updateCount();
+    s.tile.root.remove(); s.row.root.remove();
+    ui.rowsEmpty.hidden = sensors.size > 0;
+    updateCount(); fitGrid();
     log(label(s) + ' retiré du parc.');
   }
 
@@ -668,92 +784,114 @@
     log(label(s) + (isNew ? ' ajouté au parc.' : ' réautorisé.'), 'ok');
     s.retries = 0;
     connectSensor(s);
-    if (!s.num) setTimeout(() => s.el.num.focus(), 50);
+    setTimeout(() => (s.num ? s.row.owner : s.row.num).focus(), 50);
     refreshMissing();
   }
 
   // ---------- Séance ----------
   function newSessionAll() {
-    if (!confirm('Commencer une nouvelle séance ? Les prénoms et les données de la séance en cours seront effacés. Pensez à exporter avant.')) return;
+    if (!confirm('Commencer une nouvelle séance ? Prénoms, chrono, temps de zones et données seront effacés. Pensez à exporter avant.')) return;
     for (const s of sensors.values()) {
-      s.owner = ''; s.el.owner.value = '';
+      s.owner = ''; s.fcmax = null; s.row.owner.value = ''; s.row.fc.value = '';
       s.session = newSession();
       if (s.state === 'connected') s.session.start = Date.now();
-      s.el.dur.textContent = '';
-      renderStats(s); renderSteps(s); drawSpark(s);
+      renderHead(s); renderLive(s); renderInfo(s);
     }
     archive = [];
-    log('Nouvelle séance : prénoms et données remis à zéro.', 'ok');
+    resetChrono(false);
+    log('Nouvelle séance : tout est remis à zéro.', 'ok');
   }
 
   function exportCsv() {
-    const rows = [['Numero', 'Prenom', 'Capteur', 'Date', 'Heure', 'FC (bpm)']];
-    const blocks = archive.concat([...sensors.values()].filter(s => s.session.rec.length)
-      .map(s => ({ num: s.num, key: s.key, owner: s.owner, rec: s.session.rec })));
+    const blocks = archive.concat([...sensors.values()].filter(s => s.session.rec.length).map(snapshot));
     if (!blocks.length) { alert('Aucune donnée à exporter pour cette séance.'); return; }
-    blocks.sort((a, b) => (parseInt(a.num, 10) || 1e9) - (parseInt(b.num, 10) || 1e9));
+    blocks.sort((a, b) => numVal(a.num) - numVal(b.num));
+    const mmss = ms => fmt(ms);
+    const rows = [['Résumé de la séance'], ['Numéro', 'Prénom', 'FC max', 'FC moyenne', 'FC maximale', ...ZONES.map(z => z.name + ' (' + z.range + ')')]];
+    for (const b of blocks) rows.push([b.num, b.owner, b.fcmax, b.n ? Math.round(b.sum / b.n) : '', b.max ?? '', ...b.zones.map(mmss)]);
+    rows.push([], ['Détail seconde par seconde'], ['Numéro', 'Prénom', 'Capteur', 'Date', 'Heure', 'Chrono', 'FC (bpm)', '% FC max', 'Zone']);
     for (const b of blocks) {
-      for (const [t, bpm] of b.rec) {
-        const d = new Date(t);
-        rows.push([b.num, b.owner, b.key, d.toLocaleDateString('fr-FR'), d.toLocaleTimeString('fr-FR'), bpm]);
+      for (const [t, bpm, ch] of b.rec) {
+        const d = new Date(t), pct = bpm / b.fcmax;
+        rows.push([b.num, b.owner, b.key, d.toLocaleDateString('fr-FR'), d.toLocaleTimeString('fr-FR'), fmt(ch), bpm, Math.round(pct * 100), ZONES.findIndex(z => pct < z.max) + 1]);
       }
     }
     const csv = '\ufeff' + rows.map(r => r.map(v => '"' + String(v ?? '').replace(/"/g, '""') + '"').join(';')).join('\r\n');
     const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
-    const a = document.createElement('a');
-    const now = new Date();
+    const a = document.createElement('a'), now = new Date();
     a.href = url;
     a.download = 'seance-cardio-' + now.toISOString().slice(0, 10) + '-' + now.toTimeString().slice(0, 5).replace(':', 'h') + '.csv';
     document.body.append(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(url), 2000);
-    log('Séance exportée (' + (rows.length - 1) + ' mesures).', 'ok');
+    log('Séance exportée.', 'ok');
   }
 
-  // Capteurs du parc dont l'autorisation Bluetooth a été perdue
   let missingNotice = null;
   function refreshMissing() {
-    if (missingNotice) { missingNotice.remove(); missingNotice = null; }
+    if (missingNotice) { missingNotice.remove(); missingNotice = null; updateBadge(); }
     const missing = Object.keys(parc).filter(k => !sensors.has(k));
     if (!missing.length) return;
     const names = missing.map(k => parc[k].num ? 'N° ' + parc[k].num : k.replace(/^Polar\s*/, '')).join(', ');
     missingNotice = notice('<p><strong>Capteurs à réautoriser : ' + names + '.</strong></p><p>Allumez-les et utilisez « Ajouter un capteur au parc » : leur numéro sera retrouvé automatiquement.</p>');
   }
 
-  // ---------- Minuterie ----------
+  // ---------- Horloge : chrono et temps de zones ----------
+  let lastTick = Date.now(), lastZoneRender = 0;
   setInterval(() => {
-    const now = Date.now();
-    const fmt = t => { const h = Math.floor(t / 3600), m = Math.floor((t % 3600) / 60), sec = t % 60; return (h ? h + ' h ' : '') + String(m).padStart(2, '0') + ' min ' + String(sec).padStart(2, '0') + ' s'; };
-    for (const s of sensors.values()) {
-      if (!s.session.start) continue;
-      if (s.session.lostAt && s.state !== 'connected') s.el.dur.textContent = 'Signal coupé depuis ' + fmt(Math.floor((now - s.session.lostAt) / 1000));
-      else s.el.dur.textContent = 'Suivi depuis ' + fmt(Math.floor((now - s.session.start) / 1000));
+    const now = Date.now(), dt = now - lastTick;
+    lastTick = now;
+    if (chrono.running) {
+      for (const s of sensors.values()) {
+        if (s.state === 'connected' && s.bpm && now - s.bpmAt < 3000) s.session.zones[zoneOf(s.bpm, s)] += dt;
+      }
     }
-  }, 1000);
+    renderChrono();
+    if (now - lastZoneRender >= 1000) {
+      lastZoneRender = now;
+      for (const s of sensors.values()) { renderZones(s); if (s.state === 'connected' && s.bpm && now - s.bpmAt > 5000) { s.bpm = 0; renderLive(s); } }
+    }
+  }, 250);
 
   // ---------- Démarrage ----------
   async function init() {
+    ui.legend.innerHTML = ZONES.map(z => `<span style="background:${z.color}">${z.range}</span>`).join('');
     const p = store.get('cardio-prefs', {});
     if (p.fcMax) ui.fcMax.value = p.fcMax;
     if (typeof p.steps === 'boolean') ui.steps.checked = p.steps;
-    ui.fcMax.addEventListener('change', savePrefs);
+    ui.fcMax.addEventListener('change', () => {
+      savePrefs();
+      for (const s of sensors.values()) { s.row.fc.placeholder = globalFcMax(); renderLive(s); }
+    });
     ui.steps.addEventListener('change', () => {
       savePrefs();
       for (const s of sensors.values()) {
-        renderSteps(s);
-        if (s.state !== 'connected') continue;
-        enqueue(() => ui.steps.checked ? startSteps(s) : stopSteps(s));
+        renderInfo(s);
+        if (s.state === 'connected') enqueue(() => ui.steps.checked ? startSteps(s) : stopSteps(s));
       }
     });
+    ui.btnChrono.addEventListener('click', toggleChrono);
+    ui.btnChronoReset.addEventListener('click', () => resetChrono(true));
+    ui.panelBtn.addEventListener('click', () => openPanel());
+    ui.emptyOpen.addEventListener('click', () => openPanel());
+    ui.close.addEventListener('click', closePanel);
+    ui.scrim.addEventListener('click', closePanel);
+    ui.exportCsv.addEventListener('click', exportCsv);
+    ui.newSession.addEventListener('click', newSessionAll);
     ui.fullscreen.addEventListener('click', () => {
       if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen().catch(() => {});
     });
-    ui.exportCsv.addEventListener('click', exportCsv);
-    ui.newSession.addEventListener('click', newSessionAll);
-    window.addEventListener('resize', () => sensors.forEach(drawSpark));
-    window.addEventListener('beforeunload', e => {
-      const hasData = archive.length || [...sensors.values()].some(s => s.session.rec.length);
-      if (hasData) { e.preventDefault(); e.returnValue = ''; }
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && document.body.classList.contains('panel-open')) closePanel();
+      const typing = /^(INPUT|TEXTAREA|SELECT|BUTTON)$/.test(document.activeElement && document.activeElement.tagName);
+      if (e.code === 'Space' && !typing && !document.body.classList.contains('panel-open')) { e.preventDefault(); toggleChrono(); }
     });
+    window.addEventListener('resize', fitGrid);
+    document.addEventListener('fullscreenchange', () => setTimeout(fitGrid, 100));
+    window.addEventListener('beforeunload', e => {
+      if (archive.length || [...sensors.values()].some(s => s.session.rec.length)) { e.preventDefault(); e.returnValue = ''; }
+    });
+    renderChrono();
+    fitGrid();
 
     if (!('bluetooth' in navigator)) {
       notice('<p><strong>Bluetooth web non disponible dans ce navigateur.</strong></p><p>Ouvrez cette page dans Google Chrome ou Microsoft Edge sur ordinateur.</p>', true);
@@ -769,21 +907,15 @@
     if (typeof navigator.bluetooth.getDevices !== 'function') {
       notice('<p><strong>Ce navigateur ne mémorise pas les autorisations Bluetooth.</strong></p><p>Les numéros restent enregistrés, mais il faudra resélectionner chaque capteur à chaque séance. Pour l\'éviter, ouvrez <code>chrome://flags/#enable-web-bluetooth-new-permissions-backend</code>, passez l\'option sur « Enabled » et relancez Chrome.</p>');
       refreshMissing();
-      log('Prêt. Ajoutez les capteurs allumés.');
       return;
     }
-
-    // Reconnexion automatique du parc
     try {
       const devices = (await navigator.bluetooth.getDevices()).filter(d => (d.name || '').startsWith('Polar'));
       devices.forEach(d => getSensor(d));
-      const list = [...sensors.values()].sort((a, b) => (parseInt(a.num, 10) || 1e9) - (parseInt(b.num, 10) || 1e9));
+      const list = sorted();
       if (list.length) log('Parc chargé : ' + list.length + ' capteur(s). Connexion de ceux qui sont allumés…');
-      else log('Prêt. Ajoutez vos capteurs au parc.');
       list.forEach(s => connectSensor(s));
-    } catch (e) {
-      log('Lecture du parc impossible : ' + explain(e), 'err');
-    }
+    } catch (e) { log('Lecture du parc impossible : ' + explain(e), 'err'); }
     refreshMissing();
   }
 
