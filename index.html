@@ -23,35 +23,22 @@
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; }
-  body {
-    background: var(--bg); color: var(--ink);
-    font-family: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-    font-size: 16px; line-height: 1.5;
-  }
+  body { background: var(--bg); color: var(--ink); font-family: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 16px; line-height: 1.5; }
   .wrap { max-width: 1480px; margin: 0 auto; padding: 28px 24px 56px; }
 
-  /* En-tête */
   .top { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px 24px; margin-bottom: 20px; }
   h1 { font-size: 1.75rem; line-height: 1.2; font-weight: 600; margin: 0; letter-spacing: -0.01em; }
   .count { color: var(--muted); margin: 4px 0 0; font-variant-numeric: tabular-nums; }
   .count strong { color: var(--ink); font-weight: 600; }
   .actions { display: flex; flex-wrap: wrap; gap: 10px; }
 
-  .settings {
-    display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px;
-    padding: 12px 0 18px; margin-bottom: 22px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: .9375rem;
-  }
+  .settings { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; padding: 12px 0 18px; margin-bottom: 22px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: .9375rem; }
   .settings label { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
   .settings input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--accent); }
-  .settings input[type="number"] {
-    width: 76px; font: inherit; padding: 5px 8px; border-radius: var(--radius-sm);
-    border: 1.5px solid var(--line); background: var(--panel); color: var(--ink);
-  }
+  .settings input[type="number"] { width: 76px; font: inherit; padding: 5px 8px; border-radius: var(--radius-sm); border: 1.5px solid var(--line); background: var(--panel); color: var(--ink); }
+  .settings .spacer { flex: 1; }
 
-  button {
-    font: inherit; font-weight: 500; border-radius: 999px; padding: 10px 20px; cursor: pointer;
-    border: 1.5px solid var(--line); background: transparent; color: var(--ink);
-  }
+  button { font: inherit; font-weight: 500; border-radius: 999px; padding: 10px 20px; cursor: pointer; border: 1.5px solid var(--line); background: transparent; color: var(--ink); }
   button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
   @media (prefers-color-scheme: dark) { button.primary { color: #0E1620; } }
   button.small { padding: 5px 14px; font-size: .875rem; }
@@ -63,37 +50,37 @@
   .notice { border-left: 4px solid var(--warn); background: var(--panel); padding: 14px 16px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin-bottom: 20px; }
   .notice.err { border-color: var(--err); }
   .notice p { margin: 0; } .notice p + p { margin-top: 6px; }
+  .notice code { font-size: .875rem; overflow-wrap: anywhere; }
 
-  /* Grille des capteurs */
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 16px; }
-  .empty { grid-column: 1 / -1; text-align: center; padding: 56px 16px; color: var(--muted); border: 1.5px dashed var(--line); border-radius: var(--radius-lg); }
+  .empty { grid-column: 1 / -1; order: -1; text-align: center; padding: 56px 16px; color: var(--muted); border: 1.5px dashed var(--line); border-radius: var(--radius-lg); }
   .empty strong { display: block; color: var(--ink); font-size: 1.125rem; font-weight: 600; margin-bottom: 4px; }
 
-  .card {
-    --zone: var(--z0);
-    position: relative; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-lg);
-    padding: 16px 18px 14px; overflow: hidden;
-  }
+  .card { --zone: var(--z0); position: relative; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 16px 18px 14px; overflow: hidden; }
   .card::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 6px; background: var(--zone); transition: background .4s; }
   .card[data-zone="1"] { --zone: var(--z1); } .card[data-zone="2"] { --zone: var(--z2); }
   .card[data-zone="3"] { --zone: var(--z3); } .card[data-zone="4"] { --zone: var(--z4); }
   .card:not([data-state="connected"]) { opacity: .72; }
   .card:not([data-state="connected"])::before { background: var(--idle); }
 
-  .owner {
-    width: 100%; font: inherit; font-size: 1.375rem; font-weight: 600; line-height: 1.2;
-    color: var(--ink); background: transparent; border: 0; border-bottom: 1.5px dashed transparent;
-    padding: 4px 0 2px; margin-top: 4px;
+  .head { display: flex; align-items: center; gap: 12px; margin-top: 4px; }
+  .num {
+    flex: none; width: 52px; height: 52px; border-radius: 14px; text-align: center;
+    font: inherit; font-size: 1.5rem; font-weight: 600; font-variant-numeric: tabular-nums;
+    border: 1.5px solid var(--line); background: var(--bg); color: var(--ink); padding: 0;
   }
+  .num::placeholder { font-size: .875rem; font-weight: 500; color: var(--muted); }
+  .num:placeholder-shown { border-style: dashed; border-color: var(--warn); }
+  .owner { min-width: 0; flex: 1; font: inherit; font-size: 1.375rem; font-weight: 600; line-height: 1.2; color: var(--ink); background: transparent; border: 0; border-bottom: 1.5px dashed transparent; padding: 4px 0 2px; }
   .owner::placeholder { color: var(--muted); font-weight: 500; }
   .owner:hover, .owner:focus { border-bottom-color: var(--line); outline: none; }
   .owner:focus-visible { border-bottom-color: var(--accent); }
 
-  .sub { display: flex; justify-content: space-between; gap: 8px; color: var(--muted); font-size: .8125rem; margin: 2px 0 10px; }
+  .sub { display: flex; justify-content: space-between; gap: 8px; color: var(--muted); font-size: .8125rem; margin: 8px 0 10px; }
   .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--idle); margin-right: 6px; vertical-align: 1px; }
   .card[data-state="connected"] .dot { background: var(--ok); }
   .card[data-state="connecting"] .dot { background: var(--accent); }
-  .card[data-state="lost"] .dot, .card[data-state="error"] .dot { background: var(--err); }
+  .card[data-state="error"] .dot { background: var(--err); }
 
   .bpm-row { display: flex; align-items: baseline; gap: 8px; }
   .bpm { font-size: 3.5rem; font-weight: 600; line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: -0.03em; color: var(--zone); transition: color .4s; }
@@ -108,7 +95,6 @@
   .card:not([data-state="connected"]) .zone-label { color: var(--muted); }
   .bar { height: 6px; border-radius: 3px; background: var(--line); margin: 6px 0 2px; overflow: hidden; }
   .bar i { display: block; height: 100%; width: 0; background: var(--zone); transition: width .4s, background .4s; }
-
   canvas { display: block; width: 100%; height: 44px; margin: 10px 0 6px; }
   .meta { color: var(--muted); font-size: .875rem; margin: 0; font-variant-numeric: tabular-nums; }
   .meta.steps { color: var(--ink); font-weight: 500; }
@@ -124,7 +110,8 @@
   .log .warn { color: var(--warn); } .log .err { color: var(--err); } .log .ok { color: var(--ok); }
 
   .help { margin-top: 28px; color: var(--muted); font-size: .9375rem; max-width: 80ch; }
-  .help p { margin: 0 0 6px; }
+  .help h2 { font-size: 1rem; color: var(--ink); font-weight: 600; margin: 0 0 4px; }
+  .help p { margin: 0 0 14px; }
 </style>
 </head>
 <body>
@@ -135,8 +122,8 @@
       <p class="count" id="count"><strong>0</strong> capteur connecté</p>
     </div>
     <div class="actions">
-      <button class="primary" id="btnAdd">Ajouter un capteur</button>
-      <button id="btnReconnectAll" hidden>Reconnecter les capteurs autorisés</button>
+      <button id="btnNewSession">Nouvelle séance</button>
+      <button id="btnExport">Exporter la séance (CSV)</button>
       <button id="btnFullscreen">Plein écran</button>
     </div>
   </div>
@@ -144,21 +131,24 @@
   <div class="settings">
     <label>FC max de référence <input type="number" id="fcMax" min="120" max="230" value="200"> bpm</label>
     <label><input type="checkbox" id="optSteps"> Compter les pas</label>
-    <label><input type="checkbox" id="optAuto" checked> Reconnexion automatique</label>
+    <span class="spacer"></span>
+    <button class="small" id="btnAdd">Ajouter un capteur au parc</button>
   </div>
 
   <div id="notices"></div>
 
   <div class="grid" id="grid">
     <div class="empty" id="empty">
-      <strong>Aucun capteur pour l'instant</strong>
-      Allumez les capteurs, puis cliquez sur « Ajouter un capteur » une fois pour chacun.
+      <strong>Votre parc de capteurs est vide</strong>
+      Allumez un capteur, cliquez sur « Ajouter un capteur au parc », puis tapez son numéro dans la case N°.
     </div>
   </div>
 
   <div class="help">
-    <p>Pour ajouter un capteur, choisissez son nom (« Polar Sense … ») dans la fenêtre du navigateur. Le numéro est gravé au dos du capteur : notez-le sur chaque brassard pour savoir qui porte quoi.</p>
-    <p>Cliquez sur « Prénom » dans une carte pour indiquer l'élève. Le prénom reste associé tant que le capteur est allumé.</p>
+    <h2>Première fois : créer le parc</h2>
+    <p>Allumez les capteurs. Pour chacun, cliquez sur « Ajouter un capteur au parc », choisissez son « Polar Sense … », puis tapez le numéro écrit sur le capteur. Le PC s'en souvient ensuite.</p>
+    <h2>À chaque séance</h2>
+    <p>Ouvrez la page et allumez les capteurs : ils se connectent seuls, rangés par numéro. Tapez simplement le prénom de l'élève. En fin de séance, exportez le CSV puis cliquez sur « Nouvelle séance » pour effacer les prénoms.</p>
   </div>
 
   <details class="log-wrap">
@@ -175,41 +165,32 @@
   const PMD_DATA    = 'fb005c82-02e7-f387-1cad-8acd2d8df0c8';
   const PMD_ACC = 0x02;
   const OPTIONAL_SERVICES = ['device_information', 'battery_service', 'heart_rate', PMD_SERVICE];
-  const MAX_RETRIES = 6;
+  const QUICK_RETRIES = 4;       // reconnexions rapides après une coupure
+  const POLL_DELAY = 45000;      // ensuite, un essai toutes les 45 s tant que la page est ouverte
   const HR_HISTORY = 120;
   const ZONES = [
-    { max: 0.60, label: 'Très léger' },
-    { max: 0.70, label: 'Léger' },
-    { max: 0.80, label: 'Modéré' },
-    { max: 0.90, label: 'Intense' },
-    { max: Infinity, label: 'Maximal' },
+    { max: 0.60, label: 'Très léger' }, { max: 0.70, label: 'Léger' }, { max: 0.80, label: 'Modéré' },
+    { max: 0.90, label: 'Intense' }, { max: Infinity, label: 'Maximal' },
   ];
 
   const $ = id => document.getElementById(id);
   const ui = {
     grid: $('grid'), empty: $('empty'), count: $('count'), log: $('log'), notices: $('notices'),
-    add: $('btnAdd'), reconnectAll: $('btnReconnectAll'), fullscreen: $('btnFullscreen'),
-    fcMax: $('fcMax'), steps: $('optSteps'), auto: $('optAuto'),
+    add: $('btnAdd'), fullscreen: $('btnFullscreen'), exportCsv: $('btnExport'), newSession: $('btnNewSession'),
+    fcMax: $('fcMax'), steps: $('optSteps'),
   };
 
-  const sensors = new Map(); // id -> capteur
+  const sensors = new Map();   // nom du capteur -> état en mémoire
+  let archive = [];            // séances terminées (capteur éteint) gardées pour l'export
 
-  // ---------- Préférences ----------
-  const prefs = {
-    load() {
-      try {
-        const p = JSON.parse(localStorage.getItem('cardio-prefs') || '{}');
-        if (p.fcMax) ui.fcMax.value = p.fcMax;
-        if (typeof p.steps === 'boolean') ui.steps.checked = p.steps;
-        if (typeof p.auto === 'boolean') ui.auto.checked = p.auto;
-      } catch {}
-    },
-    save() {
-      try {
-        localStorage.setItem('cardio-prefs', JSON.stringify({ fcMax: +ui.fcMax.value, steps: ui.steps.checked, auto: ui.auto.checked }));
-      } catch {}
-    },
+  // ---------- Stockage (parc et préférences) ----------
+  const store = {
+    get(key, def) { try { return JSON.parse(localStorage.getItem(key)) ?? def; } catch { return def; } },
+    set(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); } catch {} },
   };
+  let parc = store.get('cardio-parc', {}); // { "Polar Sense C7A26B2E": { num: "7" } }
+  const saveParc = () => store.set('cardio-parc', parc);
+  const savePrefs = () => store.set('cardio-prefs', { fcMax: +ui.fcMax.value, steps: ui.steps.checked });
   const fcMax = () => Math.min(230, Math.max(120, +ui.fcMax.value || 200));
 
   // ---------- Journal ----------
@@ -225,62 +206,57 @@
     while (ui.log.children.length > 400) ui.log.lastChild.remove();
     console.log('[Polar]', msg);
   }
-
   function notice(html, err = false) {
     const div = document.createElement('div');
     div.className = 'notice' + (err ? ' err' : '');
     div.innerHTML = html;
     ui.notices.append(div);
+    return div;
   }
-
   function explain(e) {
     switch (e && e.name) {
-      case 'NotFoundError': return 'Aucun capteur sélectionné.';
-      case 'SecurityError': return 'Le navigateur bloque le Bluetooth sur cette page.';
-      case 'NetworkError': return 'Le capteur ne répond pas (éteint, hors de portée ou déjà connecté à 2 appareils).';
-      case 'NotSupportedError': return 'Opération non prise en charge.';
-      case 'InvalidStateError': return 'Bluetooth occupé, nouvelle tentative conseillée.';
+      case 'NotFoundError': return 'aucun capteur sélectionné';
+      case 'SecurityError': return 'Bluetooth bloqué sur cette page';
+      case 'NetworkError': return 'capteur éteint, hors de portée ou déjà connecté à 2 appareils';
+      case 'NotSupportedError': return 'opération non prise en charge';
+      case 'InvalidStateError': return 'Bluetooth occupé';
       default: return (e && e.message) || String(e);
     }
   }
 
-  const label = s => s.owner ? s.owner + ' (' + shortName(s) + ')' : shortName(s);
-  const shortName = s => (s.device.name || s.id).replace(/^Polar\s*/, '');
+  const shortName = s => s.key.replace(/^Polar\s*/, '');
+  const label = s => (s.num ? 'N° ' + s.num : shortName(s)) + (s.owner ? ' (' + s.owner + ')' : '');
 
-  // File d'attente : Windows supporte mal plusieurs connexions lancées en même temps
   let queue = Promise.resolve();
-  function enqueue(fn) {
-    const p = queue.then(fn, fn);
-    queue = p.catch(() => {});
-    return p;
-  }
-
+  function enqueue(fn) { const p = queue.then(fn, fn); queue = p.catch(() => {}); return p; }
   function withTimeout(promise, ms, what) {
     return Promise.race([promise, new Promise((_, rej) => setTimeout(() => rej(new Error(what + ' : délai dépassé')), ms))]);
   }
 
-  // ---------- Création d'un capteur ----------
-  function newSession() {
-    return { start: null, hr: [], min: null, max: null, sum: 0, n: 0, steps: 0 };
-  }
+  // ---------- Capteurs ----------
+  const newSession = () => ({ start: null, hr: [], rec: [], min: null, max: null, sum: 0, n: 0, steps: 0, lostAt: null });
 
   function getSensor(device) {
-    let s = sensors.get(device.id);
+    const key = device.name || device.id;
+    let s = sensors.get(key);
     if (s) {
       if (s.device !== device) {
         s.device.removeEventListener('gattserverdisconnected', s.h.disc);
-        s.device = device;
+        s.device.removeEventListener('advertisementreceived', s.h.adv);
+        s.device = device; s.watching = false;
         device.addEventListener('gattserverdisconnected', s.h.disc);
       }
       return s;
     }
+    if (!parc[key]) { parc[key] = { num: '' }; saveParc(); }
     s = {
-      id: device.id, device, owner: '', state: 'idle', retries: 0, timer: null, manual: false,
-      battery: null, session: newSession(), stepper: makeStepper(),
+      key, device, num: parc[key].num || '', owner: '', state: 'idle', retries: 0, timer: null, manual: false,
+      watching: false, battery: null, session: newSession(), stepper: makeStepper(),
       pmd: { cp: null, pending: null, resBytes: 2, active: false },
     };
     s.h = {
       disc: () => onDisconnected(s),
+      adv: () => { if (s.state === 'waiting' || s.state === 'error') { s.retries = 0; connectSensor(s); } },
       hr: ev => onHeartRate(s, ev),
       bat: ev => { s.battery = ev.target.value.getUint8(0); renderSub(s); },
       cp: ev => onPmdControl(s, ev),
@@ -289,7 +265,7 @@
     s.stepper.onStep = n => { s.session.steps += n; renderSteps(s); };
     device.addEventListener('gattserverdisconnected', s.h.disc);
     buildCard(s);
-    sensors.set(s.id, s);
+    sensors.set(key, s);
     updateCount();
     return s;
   }
@@ -298,7 +274,10 @@
     const el = document.createElement('article');
     el.className = 'card';
     el.innerHTML = `
-      <input class="owner" type="text" maxlength="30" placeholder="Prénom" aria-label="Prénom du porteur">
+      <div class="head">
+        <input class="num" type="text" inputmode="numeric" maxlength="4" placeholder="N°" aria-label="Numéro du capteur" title="Numéro écrit sur le capteur">
+        <input class="owner" type="text" maxlength="30" placeholder="Prénom" aria-label="Prénom de l'élève">
+      </div>
       <div class="sub"><span><span class="dot"></span><span class="st">En attente</span></span><span class="dev"></span></div>
       <div class="bpm-row"><span class="bpm">--</span><span class="unit">bpm</span><span class="heart" aria-hidden="true"></span></div>
       <div class="zone-label"></div>
@@ -310,26 +289,38 @@
       <p class="meta alert" hidden>Contact peau non détecté : ajuster le brassard.</p>
       <div class="card-actions">
         <button class="small reco" hidden>Reconnecter</button>
-        <button class="small danger rm">Retirer</button>
+        <button class="small danger rm">Retirer du parc</button>
       </div>`;
     const q = sel => el.querySelector(sel);
     s.el = {
-      root: el, owner: q('.owner'), st: q('.st'), dev: q('.dev'), bpm: q('.bpm'), zone: q('.zone-label'),
+      root: el, num: q('.num'), owner: q('.owner'), st: q('.st'), dev: q('.dev'), bpm: q('.bpm'), zone: q('.zone-label'),
       bar: q('.bar i'), canvas: q('canvas'), stats: q('.stats'), steps: q('.steps'), dur: q('.dur'),
       alert: q('.alert'), reco: q('.reco'), rm: q('.rm'),
     };
-    s.el.owner.addEventListener('change', () => {
-      const name = s.el.owner.value.trim();
-      s.owner = name;
-      log(name ? shortName(s) + ' associé à ' + name + '.' : 'Prénom retiré de ' + shortName(s) + '.', name ? 'ok' : '');
-      renderSub(s);
+    s.el.num.value = s.num;
+    s.el.num.addEventListener('change', () => {
+      s.num = s.el.num.value.trim();
+      parc[s.key] = { num: s.num };
+      saveParc();
+      applyOrder(s);
+      log(shortName(s) + (s.num ? ' enregistré sous le N° ' + s.num + '.' : ' : numéro effacé.'), 'ok');
     });
-    s.el.owner.addEventListener('keydown', e => { if (e.key === 'Enter') s.el.owner.blur(); });
+    s.el.owner.addEventListener('change', () => {
+      s.owner = s.el.owner.value.trim();
+      log(s.owner ? label(s) + ' : prénom enregistré pour la séance.' : 'Prénom retiré de ' + label(s) + '.');
+    });
+    [s.el.num, s.el.owner].forEach(inp => inp.addEventListener('keydown', e => { if (e.key === 'Enter') inp.blur(); }));
     s.el.reco.addEventListener('click', () => { s.retries = 0; connectSensor(s); });
     s.el.rm.addEventListener('click', () => removeSensor(s));
     ui.grid.append(el);
+    applyOrder(s);
     renderSub(s);
     renderSteps(s);
+  }
+
+  function applyOrder(s) {
+    const n = parseInt(s.num, 10);
+    s.el.root.style.order = Number.isFinite(n) ? n : 100000;
   }
 
   // ---------- Affichage ----------
@@ -347,86 +338,63 @@
     }
     updateCount();
   }
-
-  function renderSub(s) {
-    s.el.dev.textContent = shortName(s) + (s.battery != null ? ' · ' + s.battery + ' %' : '');
-    if (s.el.owner.value.trim() !== s.owner) s.el.owner.value = s.owner;
-  }
-
+  function renderSub(s) { s.el.dev.textContent = shortName(s) + (s.battery != null ? ' · ' + s.battery + ' %' : ''); }
   function renderSteps(s) {
     s.el.steps.hidden = !ui.steps.checked;
     s.el.steps.textContent = s.session.steps.toLocaleString('fr-FR') + ' pas';
   }
-
   function renderStats(s) {
-    const x = s.session;
-    const avg = x.n ? Math.round(x.sum / x.n) : '--';
+    const x = s.session, avg = x.n ? Math.round(x.sum / x.n) : '--';
     s.el.stats.textContent = 'Min ' + (x.min ?? '--') + ' · Moy ' + avg + ' · Max ' + (x.max ?? '--');
   }
-
   function drawSpark(s) {
-    const c = s.el.canvas;
-    const w = c.clientWidth, h = c.clientHeight;
+    const c = s.el.canvas, w = c.clientWidth, h = c.clientHeight;
     if (!w) return;
     const dpr = window.devicePixelRatio || 1;
     c.width = w * dpr; c.height = h * dpr;
     const ctx = c.getContext('2d');
     ctx.scale(dpr, dpr);
     const css = getComputedStyle(s.el.root);
-    ctx.strokeStyle = css.getPropertyValue('--line');
-    ctx.lineWidth = 1;
+    ctx.strokeStyle = css.getPropertyValue('--line'); ctx.lineWidth = 1;
     ctx.beginPath(); ctx.moveTo(0, h - 0.5); ctx.lineTo(w, h - 0.5); ctx.stroke();
     const d = s.session.hr;
     if (d.length < 2) return;
-    const lo = Math.min(...d) - 5, hi = Math.max(...d) + 5;
-    const off = HR_HISTORY - d.length;
-    const X = i => ((i + off) / (HR_HISTORY - 1)) * w;
-    const Y = v => h - 3 - ((v - lo) / (hi - lo)) * (h - 6);
-    ctx.strokeStyle = css.getPropertyValue('--zone');
-    ctx.lineWidth = 2; ctx.lineJoin = 'round';
+    const lo = Math.min(...d) - 5, hi = Math.max(...d) + 5, off = HR_HISTORY - d.length;
+    const X = i => ((i + off) / (HR_HISTORY - 1)) * w, Y = v => h - 3 - ((v - lo) / (hi - lo)) * (h - 6);
+    ctx.strokeStyle = css.getPropertyValue('--zone'); ctx.lineWidth = 2; ctx.lineJoin = 'round';
     ctx.beginPath();
     d.forEach((v, i) => i ? ctx.lineTo(X(i), Y(v)) : ctx.moveTo(X(i), Y(v)));
     ctx.stroke();
   }
-
   function updateCount() {
     const total = sensors.size;
     const on = [...sensors.values()].filter(s => s.state === 'connected').length;
-    ui.count.innerHTML = '<strong>' + on + '</strong> capteur' + (on > 1 ? 's' : '') + ' connecté' + (on > 1 ? 's' : '') +
-      (total ? ' sur ' + total : '');
+    ui.count.innerHTML = '<strong>' + on + '</strong> capteur' + (on > 1 ? 's' : '') + ' connecté' + (on > 1 ? 's' : '') + (total ? ' sur ' + total : '');
     ui.empty.hidden = total > 0;
   }
 
   // ---------- Fréquence cardiaque ----------
   function onHeartRate(s, ev) {
-    const dv = ev.target.value;
-    const flags = dv.getUint8(0);
+    const dv = ev.target.value, flags = dv.getUint8(0);
     const bpm = (flags & 0x01) ? dv.getUint16(1, true) : dv.getUint8(1);
-    const contactSupported = (flags & 0x04) !== 0;
-    const contactOk = (flags & 0x02) !== 0;
+    const contactSupported = (flags & 0x04) !== 0, contactOk = (flags & 0x02) !== 0;
     s.el.alert.hidden = !(contactSupported && !contactOk) && bpm > 0;
-    if (!bpm) {
-      s.el.bpm.textContent = '--';
-      s.el.root.classList.remove('beating');
-      return;
-    }
-    const pct = bpm / fcMax();
-    const zi = ZONES.findIndex(z => pct < z.max);
+    if (!bpm) { s.el.bpm.textContent = '--'; s.el.root.classList.remove('beating'); return; }
+    const pct = bpm / fcMax(), zi = ZONES.findIndex(z => pct < z.max);
     s.el.bpm.textContent = bpm;
     s.el.root.dataset.zone = zi;
     s.el.zone.textContent = ZONES[zi].label + ' · ' + Math.round(pct * 100) + ' % FC max';
     s.el.bar.style.width = Math.min(100, pct * 100) + '%';
     s.el.root.style.setProperty('--beat', (60 / bpm).toFixed(3) + 's');
     s.el.root.classList.add('beating');
-
     const x = s.session;
+    x.rec.push([Date.now(), bpm]);
     x.hr.push(bpm);
     if (x.hr.length > HR_HISTORY) x.hr.shift();
     x.min = x.min == null ? bpm : Math.min(x.min, bpm);
     x.max = x.max == null ? bpm : Math.max(x.max, bpm);
     x.sum += bpm; x.n++;
-    renderStats(s);
-    drawSpark(s);
+    renderStats(s); drawSpark(s);
   }
 
   // ---------- Estimation des pas ----------
@@ -461,49 +429,35 @@
 
   // ---------- Protocole Polar PMD (accéléromètre) ----------
   const u8 = dv => new Uint8Array(dv.buffer, dv.byteOffset, dv.byteLength);
-
   function onPmdControl(s, ev) {
-    const b = u8(ev.target.value);
-    const p = s.pmd.pending;
-    if (b[0] === 0xF0 && p && b[1] === p.op) {
-      s.pmd.pending = null;
-      clearTimeout(p.timer);
-      p.resolve(Uint8Array.from(b));
-    }
+    const b = u8(ev.target.value), p = s.pmd.pending;
+    if (b[0] === 0xF0 && p && b[1] === p.op) { s.pmd.pending = null; clearTimeout(p.timer); p.resolve(Uint8Array.from(b)); }
   }
-
   function pmdCommand(s, bytes) {
     return new Promise(async (resolve, reject) => {
       const timer = setTimeout(() => { s.pmd.pending = null; reject(new Error('pas de réponse du capteur')); }, 5000);
       s.pmd.pending = { op: bytes[0], resolve, timer };
       try {
         const data = new Uint8Array(bytes);
-        if (s.pmd.cp.writeValueWithResponse) await s.pmd.cp.writeValueWithResponse(data);
-        else await s.pmd.cp.writeValue(data);
+        if (s.pmd.cp.writeValueWithResponse) await s.pmd.cp.writeValueWithResponse(data); else await s.pmd.cp.writeValue(data);
       } catch (e) { clearTimeout(timer); s.pmd.pending = null; reject(e); }
     });
   }
-
   function parseSettings(bytes) {
-    const SIZES = { 0: 2, 1: 2, 2: 2, 3: 4, 4: 1, 5: 4 };
-    const out = {};
+    const SIZES = { 0: 2, 1: 2, 2: 2, 3: 4, 4: 1, 5: 4 }, out = {};
     let i = 0;
     while (i + 2 <= bytes.length) {
-      const type = bytes[i], count = bytes[i + 1];
-      i += 2;
-      const size = SIZES[type];
-      if (!size) break;
+      const type = bytes[i], count = bytes[i + 1]; i += 2;
+      const size = SIZES[type]; if (!size) break;
       const vals = [];
       for (let k = 0; k < count && i + size <= bytes.length; k++) {
-        let v = 0;
-        for (let b = 0; b < size; b++) v += bytes[i + b] * 2 ** (8 * b);
+        let v = 0; for (let b = 0; b < size; b++) v += bytes[i + b] * 2 ** (8 * b);
         vals.push(v); i += size;
       }
       out[type] = vals;
     }
     return out;
   }
-
   function chooseSettings(st) {
     return {
       rate: st[0] ? (st[0].includes(52) ? 52 : (st[0].find(r => r >= 25) || st[0][0])) : 52,
@@ -512,28 +466,21 @@
       channels: st[4] ? st[4][0] : null,
     };
   }
-
   function buildStart({ rate, res, range, channels }) {
     const cmd = [0x02, PMD_ACC, 0x00, 0x01, rate & 0xFF, rate >> 8, 0x01, 0x01, res & 0xFF, res >> 8, 0x02, 0x01, range & 0xFF, range >> 8];
     if (channels != null) cmd.push(0x04, 0x01, channels);
     return cmd;
   }
-
   function readInt(b, off, size) {
-    let v = 0;
-    for (let i = 0; i < size; i++) v += b[off + i] * 2 ** (8 * i);
-    const max = 2 ** (8 * size);
-    return v >= max / 2 ? v - max : v;
+    let v = 0; for (let i = 0; i < size; i++) v += b[off + i] * 2 ** (8 * i);
+    const max = 2 ** (8 * size); return v >= max / 2 ? v - max : v;
   }
-
   function parseDelta(b, offset, channels, refBytes) {
-    const samples = [];
-    let ref = [];
+    const samples = []; let ref = [];
     for (let c = 0; c < channels; c++) { ref.push(readInt(b, offset, refBytes)); offset += refBytes; }
     samples.push(ref.slice());
     while (offset + 2 <= b.length) {
-      const deltaSize = b[offset], count = b[offset + 1];
-      offset += 2;
+      const deltaSize = b[offset], count = b[offset + 1]; offset += 2;
       const byteLen = Math.ceil((deltaSize * count * channels) / 8);
       if (offset + byteLen > b.length) break;
       let bit = 0;
@@ -541,36 +488,27 @@
         const smp = [];
         for (let c = 0; c < channels; c++) {
           let v = 0;
-          for (let k = 0; k < deltaSize; k++) {
-            if ((b[offset + (bit >> 3)] >> (bit & 7)) & 1) v += 2 ** k;
-            bit++;
-          }
+          for (let k = 0; k < deltaSize; k++) { if ((b[offset + (bit >> 3)] >> (bit & 7)) & 1) v += 2 ** k; bit++; }
           if (deltaSize > 0 && v >= 2 ** (deltaSize - 1)) v -= 2 ** deltaSize;
           smp.push(ref[c] + v);
         }
-        ref = smp;
-        samples.push(smp);
+        ref = smp; samples.push(smp);
       }
       offset += byteLen;
     }
     return samples;
   }
-
   function onPmdData(s, ev) {
     const b = u8(ev.target.value);
     if (b[0] !== PMD_ACC || b.length < 11) return;
-    const ft = b[9];
-    let samples;
+    const ft = b[9]; let samples;
     if (ft & 0x80) samples = parseDelta(b, 10, 3, s.pmd.resBytes);
     else {
-      const t = ft & 0x7F, size = t === 0 ? 1 : t === 2 ? 3 : 2;
-      samples = [];
-      for (let i = 10; i + 3 * size <= b.length; i += 3 * size)
-        samples.push([readInt(b, i, size), readInt(b, i + size, size), readInt(b, i + 2 * size, size)]);
+      const t = ft & 0x7F, size = t === 0 ? 1 : t === 2 ? 3 : 2; samples = [];
+      for (let i = 10; i + 3 * size <= b.length; i += 3 * size) samples.push([readInt(b, i, size), readInt(b, i + size, size), readInt(b, i + 2 * size, size)]);
     }
     for (const x of samples) s.stepper.push(x[0], x[1], x[2]);
   }
-
   async function startSteps(s) {
     try {
       const svc = await s.device.gatt.getPrimaryService(PMD_SERVICE);
@@ -590,12 +528,10 @@
       if (start[3] !== 0 && start[3] !== 6) throw new Error('démarrage refusé (code ' + start[3] + ')');
       s.stepper.reset(chosen.rate);
       s.pmd.active = true;
-      log(label(s) + ' : comptage des pas actif.');
     } catch (e) {
       log(label(s) + ' : comptage des pas impossible (' + explain(e) + ').', 'warn');
     }
   }
-
   async function stopSteps(s) {
     if (!s.pmd.active || !s.device.gatt.connected) { s.pmd.active = false; return; }
     try { await pmdCommand(s, [0x03, PMD_ACC]); } catch {}
@@ -610,7 +546,6 @@
     ch.addEventListener('characteristicvaluechanged', s.h.hr);
     await ch.startNotifications();
   }
-
   async function readBattery(s) {
     try {
       const svc = await s.device.gatt.getPrimaryService('battery_service');
@@ -625,142 +560,200 @@
     } catch {}
   }
 
-  function connectSensor(s) {
+  function connectSensor(s, quiet = false) {
     clearTimeout(s.timer);
     s.manual = false;
-    setSensorState(s, 'connecting', 'Connexion…');
+    if (!quiet) setSensorState(s, 'connecting', 'Connexion…');
     return enqueue(async () => {
-      if (!sensors.has(s.id)) return;
+      if (!sensors.has(s.key) || s.state === 'connected') return;
       try {
-        await withTimeout(s.device.gatt.connect(), 15000, 'Connexion');
+        await withTimeout(s.device.gatt.connect(), 10000, 'Connexion');
         await startHeartRate(s);
         await readBattery(s);
         if (ui.steps.checked) await startSteps(s);
         s.retries = 0;
         if (!s.session.start) s.session.start = Date.now();
+        s.session.lostAt = null;
         setSensorState(s, 'connected', 'Connecté');
         log(label(s) + ' connecté.', 'ok');
-        if (!s.owner) s.el.owner.focus();
       } catch (e) {
-        log(label(s) + ' : échec de connexion (' + explain(e) + ').', 'err');
-        const on = [...sensors.values()].filter(x => x.state === 'connected').length;
-        if (on >= 7) log('Avec ' + on + ' capteurs déjà connectés, la carte Bluetooth du PC atteint peut-être sa limite.', 'warn');
         try { if (s.device.gatt.connected) s.device.gatt.disconnect(); } catch {}
-        if (!s.manual && ui.auto.checked && s.retries < MAX_RETRIES) scheduleRetry(s);
-        else {
-          setSensorState(s, 'error', 'Échec de connexion');
-          if (s.retries >= MAX_RETRIES) endSession(s, 'Capteur injoignable.');
-        }
+        if (!quiet) log(label(s) + ' : échec de connexion (' + explain(e) + ').', 'warn');
+        const on = [...sensors.values()].filter(x => x.state === 'connected').length;
+        if (!quiet && on >= 7) log('Avec ' + on + ' capteurs connectés, la carte Bluetooth du PC atteint peut-être sa limite.', 'warn');
+        if (s.manual) return;
+        if (s.retries < QUICK_RETRIES) scheduleRetry(s);
+        else goWaiting(s);
       }
     });
   }
 
   function scheduleRetry(s) {
     s.retries++;
-    const delay = Math.min(2 ** s.retries, 30);
+    const delay = Math.min(2 ** s.retries, 16);
     setSensorState(s, 'connecting', 'Nouvel essai dans ' + delay + ' s');
     clearTimeout(s.timer);
     s.timer = setTimeout(() => connectSensor(s), delay * 1000);
   }
 
-  function onDisconnected(s) {
-    s.pmd.pending = null;
-    s.pmd.active = false;
-    if (!sensors.has(s.id)) return;
-    if (s.manual) { setSensorState(s, 'disconnected', 'Déconnecté'); return; }
-    if (s.state === 'connecting') return; // l'échec est géré par connectSensor
-    log(label(s) + ' : connexion perdue.', 'warn');
-    if (ui.auto.checked && s.retries < MAX_RETRIES) scheduleRetry(s);
-    else { setSensorState(s, 'lost', 'Connexion perdue'); endSession(s, 'Capteur éteint ou hors de portée.'); }
+  // Capteur injoignable : on considère qu'il est éteint, puis on guette son retour
+  async function goWaiting(s) {
+    const wasActive = s.session.start != null;
+    setSensorState(s, 'waiting', 'En attente : allumez le capteur');
+    if (wasActive) endSession(s, 'Capteur éteint ou hors de portée.');
+    if (!s.watching && typeof s.device.watchAdvertisements === 'function') {
+      try {
+        s.device.addEventListener('advertisementreceived', s.h.adv);
+        await s.device.watchAdvertisements();
+        s.watching = true;
+        return; // la connexion se relancera dès que le capteur se manifeste
+      } catch { s.device.removeEventListener('advertisementreceived', s.h.adv); }
+    }
+    if (s.watching) return;
+    clearTimeout(s.timer);
+    s.timer = setTimeout(() => { if (s.state === 'waiting') connectSensor(s, true); }, POLL_DELAY);
   }
 
-  // Fin de session : le prénom et les compteurs sont remis à zéro
+  function onDisconnected(s) {
+    s.pmd.pending = null; s.pmd.active = false;
+    if (!sensors.has(s.key)) return;
+    if (s.manual) { setSensorState(s, 'waiting', 'Déconnecté'); return; }
+    if (s.state === 'connecting' || s.state === 'waiting') return;
+    s.session.lostAt = Date.now();
+    log(label(s) + ' : signal perdu, reconnexion…', 'warn');
+    s.retries = 0;
+    scheduleRetry(s);
+  }
+
+  // Fin de séance pour un capteur : archivage pour l'export, puis remise à zéro
   function endSession(s, reason) {
-    if (s.owner) log(reason + ' Prénom ' + s.owner + ' retiré de ' + shortName(s) + '.');
+    if (s.session.rec.length) archive.push({ num: s.num, key: s.key, owner: s.owner, rec: s.session.rec });
+    if (reason && s.owner) log(reason + ' ' + label(s) + ' : prénom retiré (données gardées pour l\'export).');
     s.owner = '';
     s.session = newSession();
     s.el.owner.value = '';
     s.el.dur.textContent = '';
-    renderStats(s); renderSteps(s); drawSpark(s); renderSub(s);
+    renderStats(s); renderSteps(s); drawSpark(s);
   }
 
-  function removeSensor(s) {
+  async function removeSensor(s) {
+    if (!confirm('Retirer le capteur ' + label(s) + ' du parc ? Il faudra l\'ajouter à nouveau pour l\'utiliser.')) return;
     clearTimeout(s.timer);
     s.manual = true;
+    endSession(s);
     try { if (s.device.gatt.connected) s.device.gatt.disconnect(); } catch {}
     s.device.removeEventListener('gattserverdisconnected', s.h.disc);
-    log(label(s) + ' retiré de la liste.');
-    sensors.delete(s.id);
+    s.device.removeEventListener('advertisementreceived', s.h.adv);
+    try { if (typeof s.device.forget === 'function') await s.device.forget(); } catch {}
+    delete parc[s.key]; saveParc();
+    sensors.delete(s.key);
     s.el.root.remove();
     updateCount();
+    log(label(s) + ' retiré du parc.');
   }
 
   async function addSensor() {
     const options = { filters: [{ namePrefix: 'Polar Sense' }], optionalServices: OPTIONAL_SERVICES };
-    const connectedNames = [...sensors.values()].filter(s => s.state === 'connected' && s.device.name).map(s => ({ name: s.device.name }));
+    const known = [...sensors.values()].filter(s => s.state === 'connected').map(s => ({ name: s.key }));
     let device;
     try {
-      try {
-        device = await navigator.bluetooth.requestDevice(connectedNames.length ? { ...options, exclusionFilters: connectedNames } : options);
-      } catch (e) {
-        if (e.name !== 'TypeError') throw e;
-        device = await navigator.bluetooth.requestDevice(options); // navigateur sans exclusionFilters
-      }
+      try { device = await navigator.bluetooth.requestDevice(known.length ? { ...options, exclusionFilters: known } : options); }
+      catch (e) { if (e.name !== 'TypeError') throw e; device = await navigator.bluetooth.requestDevice(options); }
     } catch (e) {
-      if (e.name === 'NotFoundError') log('Ajout annulé.');
-      else log('Recherche impossible : ' + explain(e), 'err');
+      if (e.name !== 'NotFoundError') log('Recherche impossible : ' + explain(e), 'err');
       return;
     }
+    const isNew = !sensors.has(device.name || device.id);
     const s = getSensor(device);
-    if (s.state === 'connected') { log(label(s) + ' est déjà connecté.'); return; }
+    log(label(s) + (isNew ? ' ajouté au parc.' : ' réautorisé.'), 'ok');
     s.retries = 0;
     connectSensor(s);
+    if (!s.num) setTimeout(() => s.el.num.focus(), 50);
+    refreshMissing();
   }
 
-  async function reconnectAll() {
-    try {
-      const list = (await navigator.bluetooth.getDevices()).filter(d => (d.name || '').startsWith('Polar'));
-      if (!list.length) { log('Aucun capteur autorisé à reconnecter.'); return; }
-      log('Reconnexion de ' + list.length + ' capteur(s)…');
-      for (const d of list) {
-        const s = getSensor(d);
-        if (s.state !== 'connected' && s.state !== 'connecting') { s.retries = 0; connectSensor(s); }
-      }
-    } catch (e) {
-      log('Reconnexion impossible : ' + explain(e), 'err');
+  // ---------- Séance ----------
+  function newSessionAll() {
+    if (!confirm('Commencer une nouvelle séance ? Les prénoms et les données de la séance en cours seront effacés. Pensez à exporter avant.')) return;
+    for (const s of sensors.values()) {
+      s.owner = ''; s.el.owner.value = '';
+      s.session = newSession();
+      if (s.state === 'connected') s.session.start = Date.now();
+      s.el.dur.textContent = '';
+      renderStats(s); renderSteps(s); drawSpark(s);
     }
+    archive = [];
+    log('Nouvelle séance : prénoms et données remis à zéro.', 'ok');
+  }
+
+  function exportCsv() {
+    const rows = [['Numero', 'Prenom', 'Capteur', 'Date', 'Heure', 'FC (bpm)']];
+    const blocks = archive.concat([...sensors.values()].filter(s => s.session.rec.length)
+      .map(s => ({ num: s.num, key: s.key, owner: s.owner, rec: s.session.rec })));
+    if (!blocks.length) { alert('Aucune donnée à exporter pour cette séance.'); return; }
+    blocks.sort((a, b) => (parseInt(a.num, 10) || 1e9) - (parseInt(b.num, 10) || 1e9));
+    for (const b of blocks) {
+      for (const [t, bpm] of b.rec) {
+        const d = new Date(t);
+        rows.push([b.num, b.owner, b.key, d.toLocaleDateString('fr-FR'), d.toLocaleTimeString('fr-FR'), bpm]);
+      }
+    }
+    const csv = '\ufeff' + rows.map(r => r.map(v => '"' + String(v ?? '').replace(/"/g, '""') + '"').join(';')).join('\r\n');
+    const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+    const a = document.createElement('a');
+    const now = new Date();
+    a.href = url;
+    a.download = 'seance-cardio-' + now.toISOString().slice(0, 10) + '-' + now.toTimeString().slice(0, 5).replace(':', 'h') + '.csv';
+    document.body.append(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+    log('Séance exportée (' + (rows.length - 1) + ' mesures).', 'ok');
+  }
+
+  // Capteurs du parc dont l'autorisation Bluetooth a été perdue
+  let missingNotice = null;
+  function refreshMissing() {
+    if (missingNotice) { missingNotice.remove(); missingNotice = null; }
+    const missing = Object.keys(parc).filter(k => !sensors.has(k));
+    if (!missing.length) return;
+    const names = missing.map(k => parc[k].num ? 'N° ' + parc[k].num : k.replace(/^Polar\s*/, '')).join(', ');
+    missingNotice = notice('<p><strong>Capteurs à réautoriser : ' + names + '.</strong></p><p>Allumez-les et utilisez « Ajouter un capteur au parc » : leur numéro sera retrouvé automatiquement.</p>');
   }
 
   // ---------- Minuterie ----------
   setInterval(() => {
     const now = Date.now();
+    const fmt = t => { const h = Math.floor(t / 3600), m = Math.floor((t % 3600) / 60), sec = t % 60; return (h ? h + ' h ' : '') + String(m).padStart(2, '0') + ' min ' + String(sec).padStart(2, '0') + ' s'; };
     for (const s of sensors.values()) {
       if (!s.session.start) continue;
-      const t = Math.floor((now - s.session.start) / 1000);
-      const h = Math.floor(t / 3600), m = Math.floor((t % 3600) / 60), sec = t % 60;
-      s.el.dur.textContent = 'Allumé depuis ' + (h ? h + ' h ' : '') + String(m).padStart(2, '0') + ' min ' + String(sec).padStart(2, '0') + ' s';
+      if (s.session.lostAt && s.state !== 'connected') s.el.dur.textContent = 'Signal coupé depuis ' + fmt(Math.floor((now - s.session.lostAt) / 1000));
+      else s.el.dur.textContent = 'Suivi depuis ' + fmt(Math.floor((now - s.session.start) / 1000));
     }
   }, 1000);
 
   // ---------- Démarrage ----------
   async function init() {
-    prefs.load();
-    ui.fcMax.addEventListener('change', prefs.save);
-    ui.auto.addEventListener('change', prefs.save);
-    ui.steps.addEventListener('change', async () => {
-      prefs.save();
+    const p = store.get('cardio-prefs', {});
+    if (p.fcMax) ui.fcMax.value = p.fcMax;
+    if (typeof p.steps === 'boolean') ui.steps.checked = p.steps;
+    ui.fcMax.addEventListener('change', savePrefs);
+    ui.steps.addEventListener('change', () => {
+      savePrefs();
       for (const s of sensors.values()) {
         renderSteps(s);
         if (s.state !== 'connected') continue;
-        if (ui.steps.checked) enqueue(() => startSteps(s));
-        else enqueue(() => stopSteps(s));
+        enqueue(() => ui.steps.checked ? startSteps(s) : stopSteps(s));
       }
     });
     ui.fullscreen.addEventListener('click', () => {
-      if (document.fullscreenElement) document.exitFullscreen();
-      else document.documentElement.requestFullscreen().catch(() => {});
+      if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen().catch(() => {});
     });
+    ui.exportCsv.addEventListener('click', exportCsv);
+    ui.newSession.addEventListener('click', newSessionAll);
     window.addEventListener('resize', () => sensors.forEach(drawSpark));
+    window.addEventListener('beforeunload', e => {
+      const hasData = archive.length || [...sensors.values()].some(s => s.session.rec.length);
+      if (hasData) { e.preventDefault(); e.returnValue = ''; }
+    });
 
     if (!('bluetooth' in navigator)) {
       notice('<p><strong>Bluetooth web non disponible dans ce navigateur.</strong></p><p>Ouvrez cette page dans Google Chrome ou Microsoft Edge sur ordinateur.</p>', true);
@@ -771,13 +764,27 @@
       if (!(await navigator.bluetooth.getAvailability()))
         notice('<p><strong>Bluetooth introuvable.</strong></p><p>Activez le Bluetooth de l\'ordinateur, puis rechargez la page.</p>');
     } catch {}
-
     ui.add.addEventListener('click', addSensor);
-    if (typeof navigator.bluetooth.getDevices === 'function') {
-      ui.reconnectAll.hidden = false;
-      ui.reconnectAll.addEventListener('click', reconnectAll);
+
+    if (typeof navigator.bluetooth.getDevices !== 'function') {
+      notice('<p><strong>Ce navigateur ne mémorise pas les autorisations Bluetooth.</strong></p><p>Les numéros restent enregistrés, mais il faudra resélectionner chaque capteur à chaque séance. Pour l\'éviter, ouvrez <code>chrome://flags/#enable-web-bluetooth-new-permissions-backend</code>, passez l\'option sur « Enabled » et relancez Chrome.</p>');
+      refreshMissing();
+      log('Prêt. Ajoutez les capteurs allumés.');
+      return;
     }
-    log('Prêt. Allumez les capteurs puis ajoutez-les un par un.');
+
+    // Reconnexion automatique du parc
+    try {
+      const devices = (await navigator.bluetooth.getDevices()).filter(d => (d.name || '').startsWith('Polar'));
+      devices.forEach(d => getSensor(d));
+      const list = [...sensors.values()].sort((a, b) => (parseInt(a.num, 10) || 1e9) - (parseInt(b.num, 10) || 1e9));
+      if (list.length) log('Parc chargé : ' + list.length + ' capteur(s). Connexion de ceux qui sont allumés…');
+      else log('Prêt. Ajoutez vos capteurs au parc.');
+      list.forEach(s => connectSensor(s));
+    } catch (e) {
+      log('Lecture du parc impossible : ' + explain(e), 'err');
+    }
+    refreshMissing();
   }
 
   init();
